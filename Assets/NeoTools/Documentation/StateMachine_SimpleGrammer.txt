@@ -1,0 +1,19 @@
+prog	:	 declBlock? expr
+
+////////////////////////////////////////////////////
+
+declBlock	:	'{' decl+ '}'
+
+decl	:	type  #name  '(' args? ')' ';'
+	
+type	:	OnEvent
+		|	OnState
+		|	OnDelay
+	
+	
+args	:	arg ( ',' arg )*
+
+arg	:	STRING
+	|	INT
+	|	FLOAT
+	
