@@ -11,3 +11,14 @@ Trigger transitions with external events
 Setup delays/timers for transitions
 
 Uses Antlr to generate parser and lexer
+
+Also included:
+HierarchyTextHighlighter: 
+Let's you color text in hierarchy
+To help keep game objects organized.
+
+DataStructureLibrary:
+Generic pool for data structures.  Allows one to 
+Checkout and Return data structures to help reuse memory
+
+Various type extensions
