@@ -9,6 +9,8 @@ Features:
 Simple drop n drag use in the editor
 Trigger transitions with external events
 Setup delays/timers for transitions
+Operators allowed in expression: &, |, !, ^, ()
+Final bool on the interpreter stack tells system to transition or not
 
 Uses Antlr to generate parser and lexer
 
