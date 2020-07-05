@@ -16,6 +16,7 @@ Also included:
 HierarchyTextHighlighter: 
 Let's you color text in hierarchy
 To help keep game objects organized.
+Neo/HighlightManager menu option allows user to adjust position of highlights
 
 DataStructureLibrary:
 Generic pool for data structures.  Allows one to 
