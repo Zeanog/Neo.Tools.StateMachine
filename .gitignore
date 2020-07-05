@@ -4,3 +4,7 @@ Logs
 Temp
 ProjectSettings
 Packages
+obj
+.vs
+*.csproj
+*.sln
