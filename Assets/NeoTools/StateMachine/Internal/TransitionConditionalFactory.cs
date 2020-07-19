@@ -18,7 +18,6 @@ namespace Neo.StateMachine.Internal
             }
         }
 
-
         protected Dictionary<StaticString, StaticString>    m_Type2DeclTypeMap = new Dictionary<StaticString, StaticString>();
         protected Dictionary<StaticString, Action<Transition<TOwner>, StaticString, StaticString, List<StaticString>>>    m_ConditionalAllocators = new Dictionary<StaticString, Action<Transition<TOwner>, StaticString, StaticString, List<StaticString>>>();
 

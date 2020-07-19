@@ -197,10 +197,6 @@ namespace Neo.StateMachine.Internal {
         protected int   m_JumpDistance = 0;
     }
 
-    public class InterpreterWaitFrame : Exception {
-
-    }
-
     public class OperationLibrary {
         public static readonly OperationLibrary Instance = new OperationLibrary();
 
