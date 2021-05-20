@@ -24,9 +24,13 @@ namespace Neo.StateMachine.Wrappers {
             m_Impl.OnEnter += m_OnEnter.Invoke;
             m_Impl.OnExit += m_OnExit.Invoke;
 
-            //m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
-            //    Debug.LogFormat("Entering state '{0}'", gameObject.name);
-            //});
+            m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
+                Debug.LogFormat("Entering state '{0}'", gameObject.name);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorGUIUtility.PingObject(gameObject.GetInstanceID());
+#endif
+            });
 
             //m_OnExit.AddListener(delegate ( InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
             //    Debug.LogFormat("Exiting state '{0}'", gameObject.name);
