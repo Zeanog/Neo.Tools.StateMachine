@@ -6,11 +6,10 @@ namespace Neo.StateMachine.Internal {
     public abstract class Operation {
         public abstract bool Parse( string[] opDesc );
 
-        public abstract bool Execute( TransitionInterpreter interpreter );
-
-        public virtual bool UpdateInstructionIndex( TransitionInterpreter interpreter ) {
+        public virtual bool Execute( TransitionInterpreter interpreter )
+        {
             ++interpreter.InstructionIndex;
-            return false;
+            return true;
         }
     }
 
@@ -31,15 +30,9 @@ namespace Neo.StateMachine.Internal {
             return true;
         }
 
-        public override bool Execute( TransitionInterpreter interpreter ) {
-            try {
-                interpreter.DeclareConditional(m_ConditionalType, m_ConditionalName, m_ConditionalArgs);
-            }
-            catch(Exception e) {
-                Log.Error(e.Message);
-                return false;
-            }
-            return true;
+        public override bool Execute( TransitionInterpreter interpreter) {
+            interpreter.DeclareConditional(m_ConditionalType, m_ConditionalName, m_ConditionalArgs);
+            return base.Execute(interpreter);
         }
 
         protected StaticString      m_ConditionalType;
@@ -59,15 +52,9 @@ namespace Neo.StateMachine.Internal {
             return true;
         }
 
-        public override bool Execute( TransitionInterpreter interpreter ) {
-            try {
-                interpreter.DataStack.Push(interpreter.DereferenceConditional(m_ConditionalName));
-            }
-            catch(Exception e) {
-                Log.Error(e.Message);
-                return false;
-            }
-            return true;
+        public override bool Execute( TransitionInterpreter interpreter) {
+            interpreter.DataStack.Push(interpreter.DereferenceConditional(m_ConditionalName));
+            return base.Execute(interpreter);
         }
 
         protected StaticString  m_ConditionalName;
@@ -84,10 +71,10 @@ namespace Neo.StateMachine.Internal {
             return true;
         }
 
-        public override bool Execute( TransitionInterpreter interpreter ) {
+        public override bool Execute( TransitionInterpreter interpreter) {
             bool res = interpreter.DataStack.Pop();
             interpreter.DataStack.Push(!res);
-            return true;
+            return base.Execute(interpreter);
         }
     }
 
@@ -107,7 +94,7 @@ namespace Neo.StateMachine.Internal {
             bool rhs = interpreter.DataStack.Pop();
             bool res = lhs && rhs;
             interpreter.DataStack.Push(res);
-            return true;
+            return base.Execute(interpreter);
         }
     }
 
@@ -127,7 +114,7 @@ namespace Neo.StateMachine.Internal {
             bool rhs = interpreter.DataStack.Pop();
             bool res = lhs || rhs;
             interpreter.DataStack.Push(res);
-            return true;
+            return base.Execute(interpreter);
         }
     }
 
@@ -147,7 +134,7 @@ namespace Neo.StateMachine.Internal {
             bool rhs = interpreter.DataStack.Pop();
             bool res = lhs ^ rhs;
             interpreter.DataStack.Push(res);
-            return true;
+            return base.Execute(interpreter);
         }
     }
 
@@ -163,12 +150,7 @@ namespace Neo.StateMachine.Internal {
         }
 
         public override bool Execute( TransitionInterpreter interpreter ) {
-            return true;
-        }
-
-        public override bool UpdateInstructionIndex( TransitionInterpreter interpreter ) {
-            base.UpdateInstructionIndex(interpreter);
-            return true;
+            return base.Execute(interpreter) && interpreter.DataStack.Count <= 0;
         }
     }
 
@@ -186,12 +168,8 @@ namespace Neo.StateMachine.Internal {
         }
 
         public override bool Execute( TransitionInterpreter interpreter ) {
-            return true;
-        }
-
-        public override bool UpdateInstructionIndex( TransitionInterpreter interpreter ) {
             interpreter.InstructionIndex += m_JumpDistance;
-            return false;
+            return true;
         }
 
         protected int   m_JumpDistance = 0;
@@ -270,22 +248,17 @@ namespace Neo.StateMachine.Internal {
             try {
                 while(InstructionIndex < m_Operations.Count) {
                     op = m_Operations[InstructionIndex];
-                    if(!op.Execute(this)) {
-                        Log.Error(op.GetType().Name);
-                        return false;
-                    }
-
-                    if(op.UpdateInstructionIndex(this)) {
+                    if (!op.Execute(this)) {
                         return true;
                     }
                 }
+
+                return true;
             }
             catch(Exception ex) {
                 Log.Exception(ex);
                 return false;
             }
-
-            return true;
         }
 
         protected List<Operation>   m_Operations = new List<Operation>();
