@@ -135,15 +135,14 @@ namespace Neo.StateMachine {
 	
 	    public bool	DereferenceConditional( StaticString name ) {
 		    try {
+                if(!m_Conditionals.ContainsKey(name))
+                {
+                    return m_Literals[name];
+                }
 			    return m_Conditionals[ name ].Evaluate();
 		    } catch( KeyNotFoundException ) {
-                try {
-			        return m_Literals[name];
-                }
-                catch( KeyNotFoundException ) {
-                    Log.Error( string.Format("Unable to dereference behavior '{0}'", name) );
-                }
-		    }
+                Log.Error(string.Format("Unable to dereference behavior '{0}'", name));
+            }
 		
 		    return false;
 	    }
