@@ -28,14 +28,9 @@ namespace Neo.Utility {
     }
     
     // Need to inherit from all the same interfaces as String
-    public class StaticString : IComparable, IComparable<string>, IComparable<StaticString>, IEquatable<string> {
+    public struct StaticString : IComparable, IComparable<string>, IComparable<StaticString>, IEquatable<string> {
     	internal static StringPool	m_StringPool = new StringPool();
-    	protected int	m_Hash = 0;
-    
-        public readonly static StaticString  Null = (StaticString)null;
-    
-    	public StaticString() {
-    	}
+    	internal int	m_Hash;
     
     	public StaticString( string str ) {
     		m_Hash = m_StringPool.Register( str );
@@ -68,9 +63,6 @@ namespace Neo.Utility {
     	}
     
     	public bool	Equals( StaticString rhs ) {
-    		if( rhs == Null ) {
-    			return false;
-    		}
     		return m_Hash.Equals( rhs.m_Hash );
     	}
     
@@ -83,18 +75,6 @@ namespace Neo.Utility {
     	}
     	
     	public static bool Equals( StaticString a, string b ) {
-    		if( a == Null && b == (string)null ) { 
-    			return true;
-    		}
-    		
-    		if( a == Null && b != (string)null ) {
-    			return false;
-    		}
-    		
-    		if( a != Null && b == (string)null ) {
-    			return false;
-    		}
-    
     		return a.ToString().Equals(b);
     	}
     
@@ -130,18 +110,6 @@ namespace Neo.Utility {
     	}
     
     	public static bool Equals( string a, StaticString b ) {
-    		if( a == (string)null && b == Null ) {
-    			return true;
-    		}
-    		
-    		if( a == (string)null && b != Null ) {
-    			return false;
-    		}
-    		
-    		if( a != (string)null && b == Null ) {
-    			return false;
-    		}
-
             return a.Equals(b.ToString());
     	}
     
@@ -178,7 +146,7 @@ namespace Neo.Utility {
     		return TypeCode.String;
     	}
     
-    	protected char[]	ToCharArray() {
+    	public char[]	ToCharArray() {
     		return ToString().ToCharArray();
     	}
     

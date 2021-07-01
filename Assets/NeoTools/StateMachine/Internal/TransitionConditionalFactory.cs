@@ -181,7 +181,7 @@ namespace Neo.StateMachine.Internal
         #region Find Conditional Args 
         public void DeclareConditional(Transition<TOwner> transition, StaticString behaviorType, StaticString name, List<StaticString> args)
         {
-            StaticString behaviorDeclType = null;
+            StaticString behaviorDeclType;
 
             try
             {
