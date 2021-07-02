@@ -103,16 +103,30 @@ namespace Neo.StateMachine {
             m_AssociatedObjects.Remove(obj);
         }
 
+        protected Dictionary<string, object> m_MethodInfoCache = new Dictionary<string, object>();
+
         public TransitionOnStateDelegate FindAssociatedMethod(string methodName)
         {
-            MethodInfo info;
+            object owner = null;
+            MethodInfo info = null;
 
-            foreach (System.Object obj in m_AssociatedObjects)
+            if (m_MethodInfoCache.ContainsKey(methodName))
             {
-                info = obj.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if (info != null)
+                owner = m_MethodInfoCache[methodName];
+                info = owner.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                System.Diagnostics.Debug.Assert(info != null);
+                return Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), owner, info) as TransitionOnStateDelegate;
+            }
+            else
+            {
+                foreach (System.Object obj in m_AssociatedObjects)
                 {
-                    return Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), obj, info) as TransitionOnStateDelegate;
+                    info = obj.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                    if (info != null)
+                    {
+                        m_MethodInfoCache.Add(methodName, obj);
+                        return Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), obj, info) as TransitionOnStateDelegate;
+                    }
                 }
             }
 
