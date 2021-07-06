@@ -13,8 +13,11 @@ Operators allowed in expression: &, |, !, ^, ()
 Final bool on the interpreter stack tells system to transition or not
 
 Transition Expression Conditionals:
+
 OnEvent - returns whether the named event has fired
+
 OnDelay - returns whether time from when state was entered has exceeded the specified delay amount
+
 OnState - represents a C# handler that takes no arguments and returns a boolean.  Object instance that holds the handler must be added to state machines associated objects.
 
 Example
