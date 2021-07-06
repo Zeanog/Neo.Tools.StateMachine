@@ -20,10 +20,15 @@ OnState - represents a C# handler that takes no arguments and returns a boolean.
 Example
 -------------------------------------------------
 {
+   
    OnEvent onFadeComplete( OnFadeComplete );
+   
    OnState isMovieComplete( CheckMovieComplete );
+   
    OnDelay onDelay( 2.0 );
+   
 }
+
 (onFadeComplete | isMovieComplete) & onDelay
 
 -------------------------------------------------
