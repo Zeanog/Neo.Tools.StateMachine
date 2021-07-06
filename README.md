@@ -14,9 +14,9 @@ Final bool on the interpreter stack tells system to transition or not
 
 Transition Expression Conditionals:
 
-OnEvent - returns whether the named event has fired
+OnEvent - returns whether the named event has fired.  When an event fires, it's considered fired for the rest of the time in the current state.  Entering the state resets this.
 
-OnDelay - returns whether time from when state was entered has exceeded the specified delay amount
+OnDelay - returns whether time from when state was entered has exceeded the specified delay amount.  Sometimes used to avoid rapid ping-ponging state changes.
 
 OnState - represents a C# handler that takes no arguments and returns a boolean.  Object instance that holds the handler must be added to state machines associated objects.
 
@@ -37,6 +37,8 @@ Example
 -------------------------------------------------
 
 Uses Antlr to generate parser and lexer
+
+I am also currently working on a debugger.  Debugging this can be a pain in the ass sometimes.  
 
 I have used this to manage menus in projects for Great Wolf Lodge and Kennedy Space Center
 
