@@ -12,6 +12,22 @@ Setup delays/timers for transitions
 Operators allowed in expression: &, |, !, ^, ()
 Final bool on the interpreter stack tells system to transition or not
 
+Transition Expression Conditionals:
+OnEvent - returns whether the named event has fired
+OnDelay - returns whether time from when state was entered has exceeded the specified delay amount
+OnState - represents a C# handler that takes no arguments and returns a boolean.  Object instance that holds the handler must be added to state machines associated objects.
+
+Example
+-------------------------------------------------
+{
+   OnEvent onFadeComplete( OnFadeComplete );
+   OnState isMovieComplete( CheckMovieComplete );
+   OnDelay onDelay( 2.0 );
+}
+(onFadeComplete | isMovieComplete) & onDelay
+
+-------------------------------------------------
+
 Uses Antlr to generate parser and lexer
 
 I have used this to manage menus in projects for Great Wolf Lodge and Kennedy Space Center
