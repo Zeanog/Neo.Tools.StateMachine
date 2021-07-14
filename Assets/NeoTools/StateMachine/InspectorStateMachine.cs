@@ -97,8 +97,13 @@ namespace Neo.StateMachine.Wrappers {
             m_Controller.RemoveAssociation(obj);
         }
 
-        public TransitionOnStateDelegate FindAssociatedMethod( string methodName ) {
-            return m_Controller.FindAssociatedMethod(methodName);
+        public TransitionOnStateDelegate FindAssociatedOnStateMethod( string methodName ) {
+            return m_Controller.FindAssociatedOnStateMethod(methodName);
+        }
+
+        public TransitionOnDelayDelegate FindAssociatedOnDelayMethod(string methodName)
+        {
+            return m_Controller.FindAssociatedOnDelayMethod(methodName);
         }
 
         public void RegisterPlug(StaticString name, TransitionPlug<float> plug)

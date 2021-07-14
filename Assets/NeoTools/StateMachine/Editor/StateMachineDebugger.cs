@@ -153,14 +153,13 @@ namespace Neo.StateMachine.Editor {
 
                         nameBuilderSlip.Value.Append(string.Format("/{0}", subName));
 
-                        EditorGUILayout.LabelField(tabBuilderSlip.Value.ToString(), GUILayout.MaxWidth(20 * indention));
+                        EditorGUILayout.LabelField(tabBuilderSlip.Value.ToString(), GUILayout.MaxWidth(indention));
                         if (EditorGUILayout.LinkButton(subName))
                         {
                             GameObject stateGO = GameObject.Find(nameBuilderSlip.Value.ToString());
                             Selection.activeGameObject = stateGO;
-
                         }
-                        indention += 1;
+                        indention += 20;
                         tabBuilderSlip.Value.Append("     ");
 
                         EditorGUILayout.EndHorizontal();
@@ -168,5 +167,7 @@ namespace Neo.StateMachine.Editor {
                 }
             }
         }
+
+
     }
 }

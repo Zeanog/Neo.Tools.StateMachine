@@ -127,15 +127,21 @@ namespace Neo.StateMachine.Internal
                 try
                 {
                     string behaviorQualifiedName = TransitionConditionalLibrary.Instance.FindAssemblyQualifiedName( behaviorDeclType.ToString(), 1 );
-
-                    argInstsSlip.Value.Add(GetValue(transition.Owner, args[0].ToString()));
-
-                    if (args.Count == 2)
+                    string argName = args[0].ToString();
+                    object arg = transition.Owner.FindAssociatedOnDelayMethod(argName);
+                    if (arg == null)
                     {
-                        TransitionPlug<float> plug = new TransitionPlug<float>();
-                        transition.Owner.RegisterPlug(args[1], plug);
-                        argInstsSlip.Value.Add(plug);
+                        arg = GetValue(transition.Owner, argName);
                     }
+
+                    argInstsSlip.Value.Add(arg);
+
+                    //if (args.Count == 2)
+                    //{
+                    //    TransitionPlug<float> plug = new TransitionPlug<float>();
+                    //    transition.Owner.RegisterPlug(args[1], plug);
+                    //    argInstsSlip.Value.Add(plug);
+                    //}
                     transition.AddConditional(AllocateNonGenericConditional(behaviorQualifiedName, argInstsSlip.Value));
                 }
                 catch (Exception ex)
@@ -156,7 +162,7 @@ namespace Neo.StateMachine.Internal
 
                 argInstsSlip.Value.Add(name);
 
-                TransitionOnStateDelegate del = transition.Owner.FindAssociatedMethod( args[0].ToString() );
+                TransitionOnStateDelegate del = transition.Owner.FindAssociatedOnStateMethod( args[0].ToString() );
                 ExceptionUtility.Verify<ArgumentException>( del != null, string.Format("Unable to find method {0} for OnState {1}( {0} );", args[0].ToString(), name.ToString()) );
 
                 argInstsSlip.Value.Add(del);

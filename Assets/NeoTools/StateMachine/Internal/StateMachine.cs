@@ -12,7 +12,8 @@ namespace Neo.StateMachine {
 
         void  AddAssociation( System.Object obj );
         void  RemoveAssociation(System.Object obj);
-        TransitionOnStateDelegate FindAssociatedMethod( string methodName );
+        TransitionOnStateDelegate FindAssociatedOnStateMethod( string methodName );
+        TransitionOnDelayDelegate FindAssociatedOnDelayMethod(string methodName);
 
         void  RegisterPlug(StaticString name, TransitionPlug<float> plug);
         TransitionPlug<float> FindPlug(StaticString name);
@@ -103,34 +104,96 @@ namespace Neo.StateMachine {
             m_AssociatedObjects.Remove(obj);
         }
 
-        protected Dictionary<string, object> m_MethodInfoCache = new Dictionary<string, object>();
+        protected Dictionary<string, TransitionOnStateDelegate> m_OnStateMethodInfoCache = new Dictionary<string, TransitionOnStateDelegate>();
 
-        public TransitionOnStateDelegate FindAssociatedMethod(string methodName)
+        public TransitionOnStateDelegate FindAssociatedOnStateMethod(string methodName)
         {
-            object owner = null;
             MethodInfo info = null;
 
-            if (m_MethodInfoCache.ContainsKey(methodName))
+            try
             {
-                owner = m_MethodInfoCache[methodName];
-                info = owner.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                System.Diagnostics.Debug.Assert(info != null);
-                return Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), owner, info) as TransitionOnStateDelegate;
-            }
-            else
-            {
-                foreach (System.Object obj in m_AssociatedObjects)
+                if (m_OnStateMethodInfoCache.ContainsKey(methodName))
                 {
-                    info = obj.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                    if (info != null)
+                    return m_OnStateMethodInfoCache[methodName];
+                }
+                else
+                {
+                    foreach (System.Object obj in m_AssociatedObjects)
                     {
-                        m_MethodInfoCache.Add(methodName, obj);
-                        return Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), obj, info) as TransitionOnStateDelegate;
+                        info = obj.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        if (info != null)
+                        {
+                            TransitionOnStateDelegate del = Delegate.CreateDelegate(typeof(TransitionOnStateDelegate), obj, info) as TransitionOnStateDelegate;
+                            m_OnStateMethodInfoCache.Add(methodName, del);
+                            return del;
+                        }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch( Exception ex )
+            {
+                Log.Exception(ex);
+                return null;
+            }
+        }
+
+        protected Dictionary<string, TransitionOnDelayDelegate> m_OnDelayMethodInfoCache = new Dictionary<string, TransitionOnDelayDelegate>();
+
+        //Wanna be able to handle both properties and methods with same signature
+        public TransitionOnDelayDelegate FindAssociatedOnDelayMethod(string methodName)
+        {
+            Type retType = typeof(float);
+            Type[] args = new Type[0];
+
+            try
+            {
+                if (m_OnDelayMethodInfoCache.ContainsKey(methodName))
+                {
+                    return m_OnDelayMethodInfoCache[methodName];
+                }
+                else
+                {
+                    foreach (System.Object obj in m_AssociatedObjects)
+                    {
+                        PropertyInfo propInfo = obj.GetType().GetProperty(methodName, retType);
+                        MethodInfo info = null;
+                        if (propInfo != null)
+                        {
+                            var accessors = propInfo.GetAccessors(true);
+                            
+                            //Find the getter
+                            foreach ( var accessor in accessors )
+                            {
+                                if( accessor.ReturnType == retType )
+                                {
+                                    info = accessor;
+                                }
+                            }
+
+                            System.Diagnostics.Debug.Assert(info != null);
+                            TransitionOnDelayDelegate del = Delegate.CreateDelegate(typeof(TransitionOnDelayDelegate), obj, info) as TransitionOnDelayDelegate;
+                            m_OnDelayMethodInfoCache.Add(methodName, del);
+                            return del;
+                        }
+
+                        MethodInfo methodInfo = obj.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        if (methodInfo != null)
+                        {
+                            TransitionOnDelayDelegate del = Delegate.CreateDelegate(typeof(TransitionOnDelayDelegate), obj, methodInfo) as TransitionOnDelayDelegate;
+                            m_OnDelayMethodInfoCache.Add(methodName, del);
+                            return del;
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch( Exception ex ) {
+                Log.Exception(ex);
+                return null;
+            }
         }
 
         protected Dictionary<StaticString, TransitionPlug<float>>   m_Plugs = new Dictionary<StaticString, TransitionPlug<float>>();

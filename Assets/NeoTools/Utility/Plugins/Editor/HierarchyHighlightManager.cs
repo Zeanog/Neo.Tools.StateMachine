@@ -13,7 +13,7 @@ namespace Neo.Utility {
         public static Vector2   TextOffset {
             get {
                 if( m_TextOffset == null ) {
-                    string encodedVal = PlayerPrefs.GetString("HierarchyHighlight.Offset", "-0.51,0");
+                    string encodedVal = PlayerPrefs.GetString("HierarchyHighlight.Offset", "17.2,0");
                     m_TextOffset = new Mutable<Vector2>( Vector2Extensions.Parse(encodedVal) );
                 }
                 return m_TextOffset.Value;
