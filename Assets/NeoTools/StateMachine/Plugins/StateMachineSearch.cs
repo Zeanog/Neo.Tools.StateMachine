@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System;
 using System.Collections.Generic;
 using Neo.StateMachine.Wrappers;
 
 namespace Neo.StateMachine.Editor {
+#if UNITY_EDITOR
     public class StateMachineSearch : EditorWindow {
         [MenuItem("Neo/StateMachine/Search %#&s")]
         static void Init()
@@ -209,4 +212,5 @@ namespace Neo.StateMachine.Editor {
             }
         }
     }
+#endif
 }
