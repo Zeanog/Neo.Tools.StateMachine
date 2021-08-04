@@ -11,14 +11,21 @@ namespace Neo.StateMachine.Wrappers {
         [SerializeField]
         //[FullSerializer.fsIgnore]
         protected string            m_Code = "";
+        public string               Code {
+            get {
+                return m_Code;
+            }
+        }
 
         //[FullSerializer.fsIgnore]
         protected TOwner            m_Owner;
 
         //[FullSerializer.fsIgnore]
+        [HideInInspector]
         protected Transition<TOwner>        m_Transition;
         public override Transition<TOwner>  Transition {
             get {
+                EnsureTransitionInstance();
                 return m_Transition;
             }
         }
@@ -28,12 +35,22 @@ namespace Neo.StateMachine.Wrappers {
                 return transform.BuildFullName();
             }
         }
+
+        protected void EnsureTransitionInstance()
+        {
+            if( m_Owner != null && m_Transition != null )
+            {
+                return;
+            }
+
+            m_Owner = transform.GetComponentInParent<TOwner>();
+            ExceptionUtility.Verify<System.ArgumentNullException>(m_Owner != null, string.Format("Owner for transition '{0}' not found", name));
+
+            m_Transition = new Transition<TOwner>(FullName, m_Owner);
+        }
     
         protected virtual void  Awake() {
-            m_Owner = transform.GetComponentInParent<TOwner>();
-            ExceptionUtility.Verify<System.ArgumentNullException>( m_Owner != null, string.Format("Owner for transition '{0}' not found", name) );
-    
-            m_Transition = new Transition<TOwner>(FullName, m_Owner );
+            EnsureTransitionInstance();
         }
     
         protected virtual void  Start() {

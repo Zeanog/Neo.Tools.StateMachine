@@ -21,8 +21,8 @@ namespace Neo.StateMachine.Wrappers {
         {
             base.Awake();
 
-            m_Impl.OnEnter += m_OnEnter.Invoke;
-            m_Impl.OnExit += m_OnExit.Invoke;
+            State.OnEnter += m_OnEnter.Invoke;
+            State.OnExit += m_OnExit.Invoke;
 
             m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
                 Debug.LogFormat("Entering state '{0}'", gameObject.name);
@@ -39,10 +39,10 @@ namespace Neo.StateMachine.Wrappers {
 
         protected override void OnDestroy()
         {
-            if (m_Impl != null)
+            if (State != null)
             {
-                m_Impl.OnEnter -= m_OnEnter.Invoke;
-                m_Impl.OnExit -= m_OnExit.Invoke;
+                State.OnEnter -= m_OnEnter.Invoke;
+                State.OnExit -= m_OnExit.Invoke;
             }
 
             base.OnDestroy();

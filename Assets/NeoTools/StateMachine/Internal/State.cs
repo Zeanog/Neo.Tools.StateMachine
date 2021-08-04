@@ -6,6 +6,11 @@ namespace Neo.StateMachine {
     public class State<OwnerType> where OwnerType : class, IStateMachineOwner {
         //[Save]
         protected List< Transition<OwnerType> >     m_ExitTransitionList = new List< Transition<OwnerType> >();
+        public List<Transition<OwnerType>>          ExitTransitionList {
+            get {
+                return m_ExitTransitionList;
+            }
+        }
     	//[Save]
         protected float         m_TimeEnterState = 0.0f;
         protected float         m_DurationInState {

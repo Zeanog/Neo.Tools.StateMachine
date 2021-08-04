@@ -7,6 +7,11 @@ namespace Neo.StateMachine.Wrappers {
         //[FullSerializer.fsIgnore]
         [SerializeField]
         protected List< InspectorState >     m_NextStates;
+        public List<InspectorState>         NextStates {
+            get {
+                return m_NextStates;
+            }
+        }
 
         protected override void Start()
         {

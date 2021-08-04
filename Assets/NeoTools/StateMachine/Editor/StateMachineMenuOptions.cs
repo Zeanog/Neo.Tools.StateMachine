@@ -26,17 +26,17 @@ namespace Neo.StateMachine {
             go.EnsureComponent<TWrapper>();
         }
 
-        [MenuItem("GameObject/Neo/InspectorState")]
+        [MenuItem("GameObject/Neo/Create/InspectorState")]
         private static void    OnCreateState() {
             Create<InspectorState>();
         }
     
-        [MenuItem("GameObject/Neo/InspectorTransition")]
+        [MenuItem("GameObject/Neo/Create/InspectorTransition")]
         private static void    OnCreateTransition() {
             Create<InspectorTransition>();
         }
     
-        [MenuItem("GameObject/Neo/InspectorStateMachine")]
+        [MenuItem("GameObject/Neo/Create/InspectorStateMachine")]
         private static void    OnCreateStateMachine() {
             Create<InspectorStateMachine>();
         }

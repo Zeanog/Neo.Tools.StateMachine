@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
 namespace Neo.StateMachine.Editor {
     [ExecuteAlways]
     class StateMachineDebugger : EditorWindow {
@@ -9,7 +10,7 @@ namespace Neo.StateMachine.Editor {
         static void Init()
         {
             // Get existing open window or if none, make a new one:
-            StateMachineDebugger window = (StateMachineDebugger)EditorWindow.GetWindow(typeof(StateMachineDebugger));
+            StateMachineDebugger window = (StateMachineDebugger)EditorWindow.GetWindow<StateMachineDebugger>();
             window.ShowPopup();
             window.Repaint();
         }
@@ -46,7 +47,7 @@ namespace Neo.StateMachine.Editor {
             Repaint();
         }
 
-        protected Wrappers.InspectorStateMachine  m_MonitoredStateMachine = null;
+        protected Wrappers.InspectorStateMachine m_MonitoredStateMachine = null;
         public Wrappers.InspectorStateMachine MonitoredStateMachine {
             get {
                 return m_MonitoredStateMachine;
@@ -64,6 +65,37 @@ namespace Neo.StateMachine.Editor {
             }
         }
         protected string m_MonitoredStateMachineName;
+
+        protected void OnGUIState(string label, List<string> currentStateName)
+        {
+            using (var nameBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut())
+            using (var tabBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut())
+            {
+                EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+                nameBuilderSlip.Value.Clear();
+                tabBuilderSlip.Value.Clear();
+
+                int indention = 0;
+                foreach (var subName in currentStateName)
+                {
+                    EditorGUILayout.BeginHorizontal();
+
+                    nameBuilderSlip.Value.Append(string.Format("/{0}", subName));
+
+                    EditorGUILayout.LabelField(tabBuilderSlip.Value.ToString(), GUILayout.MaxWidth(indention));
+                    if (EditorGUILayout.LinkButton(subName))
+                    {
+                        GameObject stateGO = GameObject.Find(nameBuilderSlip.Value.ToString());
+                        Selection.activeGameObject = stateGO;
+
+                    }
+                    indention += 20;
+                    tabBuilderSlip.Value.Append("     ");
+
+                    EditorGUILayout.EndHorizontal();
+                }
+            }
+        }
 
         public void OnGUI()
         {
@@ -113,61 +145,13 @@ namespace Neo.StateMachine.Editor {
 
                 EditorGUILayout.Space();
 
-                using (var nameBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut())
-                using ( var tabBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut() ) {
-                    EditorGUILayout.LabelField("Current State:", EditorStyles.boldLabel);
-                    nameBuilderSlip.Value.Clear();
-                    tabBuilderSlip.Value.Clear();
+                OnGUIState("Current State:", currentStateNameSlip.Value);
+                EditorGUILayout.Space();
+                OnGUIState("Previous State:", previousStateNameSlip.Value);
 
-                    int indention = 0;
-                    foreach (var subName in currentStateNameSlip.Value)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-
-                        nameBuilderSlip.Value.Append(string.Format("/{0}", subName));
-
-                        EditorGUILayout.LabelField(tabBuilderSlip.Value.ToString(), GUILayout.MaxWidth(20 * indention));
-
-                        if (EditorGUILayout.LinkButton(subName))
-                        {
-                            GameObject stateGO = GameObject.Find(nameBuilderSlip.Value.ToString());
-                            Selection.activeGameObject = stateGO;
-
-                        }
-                        indention += 1;
-                        tabBuilderSlip.Value.Append("     ");
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-
-                    EditorGUILayout.Space();
-
-                    EditorGUILayout.LabelField("Previous State:", EditorStyles.boldLabel);
-                    nameBuilderSlip.Value.Clear();
-                    tabBuilderSlip.Value.Clear();
-
-                    indention = 0;
-                    foreach (var subName in previousStateNameSlip.Value)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-
-                        nameBuilderSlip.Value.Append(string.Format("/{0}", subName));
-
-                        EditorGUILayout.LabelField(tabBuilderSlip.Value.ToString(), GUILayout.MaxWidth(indention));
-                        if (EditorGUILayout.LinkButton(subName))
-                        {
-                            GameObject stateGO = GameObject.Find(nameBuilderSlip.Value.ToString());
-                            Selection.activeGameObject = stateGO;
-                        }
-                        indention += 20;
-                        tabBuilderSlip.Value.Append("     ");
-
-                        EditorGUILayout.EndHorizontal();
-                    }
-                }
+                EditorGUILayout.Space();
             }
         }
-
-
     }
 }
+#endif

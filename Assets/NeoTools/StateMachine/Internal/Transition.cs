@@ -33,8 +33,13 @@ namespace Neo.StateMachine {
     public class Transition<TOwner> where TOwner : class, IStateMachineOwner {
         //[Save]
         protected 	List< State<TOwner> > m_NextStates = new List< State<TOwner> >();
-	
-	    protected 	Dictionary< StaticString, ATransitionConditional<TOwner> >	m_Conditionals = new Dictionary< StaticString, ATransitionConditional<TOwner> >();
+        public List<State<TOwner>> NextStates {
+            get {
+                return m_NextStates;
+            }
+        }
+
+        protected 	Dictionary< StaticString, ATransitionConditional<TOwner> >	m_Conditionals = new Dictionary< StaticString, ATransitionConditional<TOwner> >();
         protected   static Dictionary<StaticString, bool>   m_Literals = new Dictionary<StaticString, bool>();
 	    protected	TransitionProgram<TOwner>	m_Program = new TransitionProgram<TOwner>();
 

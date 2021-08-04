@@ -8,7 +8,7 @@ namespace Neo.StateMachine.Wrappers {
     //[FullSerializer.fsObject(MemberSerialization = FullSerializer.fsMemberSerialization.Default)]
     //[DisallowMultipleComponent]
     public class InspectorStateMachine : MonoBehaviour, IStateMachineOwner {
-        protected StateMachine<InspectorStateMachine>    m_Controller;
+        protected StateMachine<InspectorStateMachine> m_Controller;
         public StateMachine<InspectorStateMachine> Controller {
             get {
                 return m_Controller;
@@ -17,7 +17,12 @@ namespace Neo.StateMachine.Wrappers {
 
         //[FullSerializer.fsIgnore]
         [SerializeField]
-        protected InspectorState     m_InitialState;
+        protected InspectorState m_InitialState;
+        public InspectorState InitialState { 
+            get {
+                return m_InitialState;
+            }
+        }
 
         //[FullSerializer.fsProperty]
         public InspectorState CurrentState {
