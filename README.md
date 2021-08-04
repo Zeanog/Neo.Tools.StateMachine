@@ -2,7 +2,7 @@
 
 Welcome to Neo.Tools.Statemachine!  
 
-As the name suggests this is just taking an old tool and making it new again.  Neo.Tools.Statemachine seperates the transition logic from the statemchine logic.  Allowing
+As the name suggests this is just taking an old tool and making it new again.  Neo.Tools.Statemachine seperates the transition logic from the statemachine logic.  Allowing
 you to then script the transition logic via our simple scripting language.  
 
 Features:
