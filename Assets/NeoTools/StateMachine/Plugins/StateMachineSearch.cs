@@ -6,7 +6,7 @@ using Neo.StateMachine.Wrappers;
 
 namespace Neo.StateMachine.Editor {
     public class StateMachineSearch : EditorWindow {
-        [MenuItem("Neo/StateMachine/Search")]
+        [MenuItem("Neo/StateMachine/Search %#&s")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
@@ -94,8 +94,8 @@ namespace Neo.StateMachine.Editor {
             });
         }
 
-        [MenuItem("GameObject/Neo/Search For References Of", true)]
-        private static bool SearchForReferencesOfValidator()
+        //[MenuItem("GameObject/Neo/Search For References Of", true)]
+        public static bool SearchForReferencesOfValidator( Type searchType )
         {
             if (Selection.activeGameObject == null)
             {
@@ -113,26 +113,21 @@ namespace Neo.StateMachine.Editor {
             return false;
         }
 
-        [MenuItem("GameObject/Neo/Search For References Of")]
-        private static void SearchForReferencesOf(MenuCommand cmd)
+        //[MenuItem("GameObject/Neo/Search For References Of")]
+        public static void SearchForReferencesOf( Component comp )
         {
             ClearForSearch();
 
-            Component comp;
-            var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
-            GameObject selection = cmd.context as GameObject;
-
-            foreach (Type type in m_ValidSearchTypes)
+            try
             {
-                comp = selection.GetComponent(type);
-                if (comp == null)
-                {
-                    continue;
-                }
-                m_SearchHandlers[type].Invoke(stateMachines, comp);
+                var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
+                m_SearchHandlers[comp.GetType()].Invoke(stateMachines, comp);
+                Selection.objects = m_SelectionGOs.ToArray();
             }
-
-            Selection.objects = m_SelectionGOs.ToArray();
+            catch( Exception ex )
+            {
+                Debug.LogException(ex);
+            }
         }
 
         protected static void ClearForSearch()

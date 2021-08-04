@@ -22,5 +22,19 @@ namespace Neo.StateMachine.Wrappers {
                 AddState(m_NextStates[ix]);
             }
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Search For References Of", true)]
+        private bool SearchForReferencesOfValidator()
+        {
+            return Editor.StateMachineSearch.SearchForReferencesOfValidator(GetType());
+        }
+
+        [ContextMenu("Search For References Of")]
+        private void SearchForReferencesOf()
+        {
+            Editor.StateMachineSearch.SearchForReferencesOf(this);
+        }
+#endif
     }
 }

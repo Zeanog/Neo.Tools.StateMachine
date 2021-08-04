@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Neo.StateMachine.Editor {
     [ExecuteAlways]
     class StateMachineDebugger : EditorWindow {
-        [MenuItem("Neo/StateMachine/Debugger")]
+        [MenuItem("Neo/StateMachine/Debugger  %#&d")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
