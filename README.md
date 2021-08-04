@@ -52,7 +52,7 @@ Checkout and Return data structures to help reuse memory
 
 Various type extensions
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+------------------------------------------------
 I am also currently working on a debugger.  Debugging this can be a pain in the ass sometimes.  
 8/4/2021 - Checked in a second pass of debugger.  Added search features.  You can search code for a specified string.  Can also search for what transition holds onto a state or 
 what state holds onto a transition
