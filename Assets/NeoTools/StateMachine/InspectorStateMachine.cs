@@ -43,7 +43,7 @@ namespace Neo.StateMachine.Wrappers {
 
         public Action<State<InspectorStateMachine>, State<InspectorStateMachine>> OnStateChange;
 
-        protected void Awake()
+        static InspectorStateMachine()
         {
             Clock.Time = delegate () { return UnityEngine.Time.time; };
             Clock.DeltaTime = delegate () { return UnityEngine.Time.deltaTime; };
@@ -51,7 +51,10 @@ namespace Neo.StateMachine.Wrappers {
             Log.SetWarningHandler(UnityEngine.Debug.LogWarning);
             Log.SetLogHandler(UnityEngine.Debug.Log);
             Log.SetExceptionHandler(UnityEngine.Debug.LogException);
+        }
 
+        protected void Awake()
+        {
             m_Controller = new StateMachine<InspectorStateMachine>(this);
             m_Controller.OnStateChange += delegate (State<InspectorStateMachine> current, State<InspectorStateMachine> previous)
             {

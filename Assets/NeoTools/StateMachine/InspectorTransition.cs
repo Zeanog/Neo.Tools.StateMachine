@@ -24,12 +24,6 @@ namespace Neo.StateMachine.Wrappers {
         }
 
 #if UNITY_EDITOR
-        [ContextMenu("Neo/Search States For References Of", true)]
-        private bool SearchForReferencesOfValidator()
-        {
-            return Editor.StateMachineSearch.SearchForComponentReferencesOfValidator(GetType());
-        }
-
         [ContextMenu("Neo/Search States For References Of")]
         private void SearchForReferencesOf()
         {

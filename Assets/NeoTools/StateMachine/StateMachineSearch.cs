@@ -12,7 +12,7 @@ namespace Neo.StateMachine.Editor {
         [MenuItem("GameObject/Neo/Search States Enter\\Exit events For References Of", true)]
         public static bool SearchForReferencesOfValidator()
         {
-            return Selection.activeGameObject != null;
+            return Selection.activeGameObject != null && Selection.gameObjects.Length == 1;
         }
 
         [MenuItem("GameObject/Neo/Search States Enter\\Exit events For References Of")]
