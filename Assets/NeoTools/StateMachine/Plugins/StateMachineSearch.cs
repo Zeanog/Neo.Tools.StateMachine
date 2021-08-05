@@ -8,6 +8,20 @@ using Neo.StateMachine.Wrappers;
 
 namespace Neo.StateMachine.Editor {
 #if UNITY_EDITOR
+    public static class GameObjectSearchExtensions {
+        [MenuItem("GameObject/Neo/Search States Enter\\Exit events For References Of", true)]
+        public static bool SearchForReferencesOfValidator()
+        {
+            return Selection.activeGameObject != null;
+        }
+
+        [MenuItem("GameObject/Neo/Search States Enter\\Exit events For References Of")]
+        public static void SearchForReferencesOf()
+        {
+            StateMachineSearch.SearchForReferencesOf(Selection.activeGameObject);
+        }
+    }
+
     public class StateMachineSearch : EditorWindow {
         [MenuItem("Neo/StateMachine/Search %#&s")]
         static void Init()
@@ -75,12 +89,12 @@ namespace Neo.StateMachine.Editor {
         protected static List<GameObject> m_SelectionGOs = new List<GameObject>();
         protected static Dictionary<object, object> m_VisitedInSearch = new Dictionary<object, object>();
 
-        protected static List<System.Type> m_ValidSearchTypes = new List<System.Type>() { typeof(InspectorTransition), typeof(InspectorState) };
-        protected static Dictionary<System.Type, Action<InspectorStateMachine[], Component>> m_SearchHandlers = new Dictionary<Type, Action<InspectorStateMachine[], Component>>();
+        protected static List<System.Type> m_ValidComponentSearchTypes = new List<System.Type>() { typeof(InspectorTransition), typeof(InspectorState) };
+        protected static Dictionary<System.Type, Action<InspectorStateMachine[], Component>> m_ComponentSearchHandlers = new Dictionary<Type, Action<InspectorStateMachine[], Component>>();
 
         static StateMachineSearch()
         {
-            m_SearchHandlers.Add(typeof(InspectorTransition), delegate (InspectorStateMachine[] stateMachines, Component comp)
+            m_ComponentSearchHandlers.Add(typeof(InspectorTransition), delegate (InspectorStateMachine[] stateMachines, Component comp)
             {
                 foreach (var stateMachine in stateMachines)
                 {
@@ -88,7 +102,7 @@ namespace Neo.StateMachine.Editor {
                 }
             });
 
-            m_SearchHandlers.Add(typeof(InspectorState), delegate (InspectorStateMachine[] stateMachines, Component comp)
+            m_ComponentSearchHandlers.Add(typeof(InspectorState), delegate (InspectorStateMachine[] stateMachines, Component comp)
             {
                 foreach (var stateMachine in stateMachines)
                 {
@@ -98,16 +112,16 @@ namespace Neo.StateMachine.Editor {
         }
 
         //[MenuItem("GameObject/Neo/Search For References Of", true)]
-        public static bool SearchForReferencesOfValidator( Type searchType )
+        public static bool SearchForComponentReferencesOfValidator( Type searchType )
         {
             if (Selection.activeGameObject == null)
             {
                 return false;
             }
 
-            for (int ix = 0; ix < m_ValidSearchTypes.Count; ++ix)
+            for (int ix = 0; ix < m_ValidComponentSearchTypes.Count; ++ix)
             {
-                if (Selection.activeGameObject.GetComponent(m_ValidSearchTypes[ix]))
+                if (Selection.activeGameObject.GetComponent(m_ValidComponentSearchTypes[ix]))
                 {
                     return true;
                 }
@@ -116,7 +130,27 @@ namespace Neo.StateMachine.Editor {
             return false;
         }
 
-        //[MenuItem("GameObject/Neo/Search For References Of")]
+        public static void SearchForReferencesOf(GameObject searchFor)
+        {
+            ClearForSearch();
+
+            try
+            {
+                var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
+                
+                foreach( var stateMachine in stateMachines )
+                {
+                    SearchStatesForReferenceOf(stateMachine.InitialState, searchFor);
+                }
+
+                Selection.objects = m_SelectionGOs.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
         public static void SearchForReferencesOf( Component comp )
         {
             ClearForSearch();
@@ -124,7 +158,7 @@ namespace Neo.StateMachine.Editor {
             try
             {
                 var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
-                m_SearchHandlers[comp.GetType()].Invoke(stateMachines, comp);
+                m_ComponentSearchHandlers[comp.GetType()].Invoke(stateMachines, comp);
                 Selection.objects = m_SelectionGOs.ToArray();
             }
             catch( Exception ex )
@@ -208,6 +242,29 @@ namespace Neo.StateMachine.Editor {
                 foreach (InspectorState nextState in transition.NextStates)
                 {
                     SearchCode(nextState, searchFor);
+                }
+            }
+        }
+
+        protected static void SearchStatesForReferenceOf(InspectorState state, GameObject searchFor )
+        {
+            if (m_VisitedInSearch.ContainsKey(state))
+            {
+                return;
+            }
+
+            m_VisitedInSearch.Add(state, null);
+
+            if( state.HasListenerToOnEnter(searchFor) || state.HasListenerToOnEnter(searchFor) )
+            {
+                m_SelectionGOs.AddUnique(state.gameObject);
+            }
+
+            foreach (InspectorTransition transition in state.Transitions)
+            {
+                foreach (InspectorState nextState in transition.NextStates)
+                {
+                    SearchStatesForReferenceOf(nextState, searchFor);
                 }
             }
         }

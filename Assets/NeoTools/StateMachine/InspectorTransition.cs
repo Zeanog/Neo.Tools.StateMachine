@@ -27,7 +27,7 @@ namespace Neo.StateMachine.Wrappers {
         [ContextMenu("Search For References Of", true)]
         private bool SearchForReferencesOfValidator()
         {
-            return Editor.StateMachineSearch.SearchForReferencesOfValidator(GetType());
+            return Editor.StateMachineSearch.SearchForComponentReferencesOfValidator(GetType());
         }
 
         [ContextMenu("Search For References Of")]

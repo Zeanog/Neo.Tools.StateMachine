@@ -12,10 +12,40 @@ namespace Neo.StateMachine.Wrappers {
         //[FullSerializer.fsIgnore]
         [SerializeField]
         protected EnterExitUnityEvent   m_OnEnter;
+        public bool HasListenerToOnEnter(GameObject go)
+        {
+            return HasListeningTo(m_OnEnter, go);
+        }
 
         //[FullSerializer.fsIgnore]
         [SerializeField]
         protected EnterExitUnityEvent   m_OnExit;
+        public bool HasListenerToOnExit(GameObject go)
+        {
+            return HasListeningTo(m_OnExit, go);
+        }
+
+        protected bool HasListeningTo(EnterExitUnityEvent ev, GameObject go)
+        {
+            Object obj;
+            System.Type objType;
+            for (int ix = 0; ix < ev.GetPersistentEventCount(); ++ix)
+            {
+                obj = m_OnEnter.GetPersistentTarget(ix);
+                objType = obj.GetType();
+                if (objType == typeof(GameObject))
+                {
+                    return go == (obj as GameObject);
+                }
+                else if (objType.IsSubclassOf(typeof(Component)))
+                {
+                    Component comp = obj as Component;
+                    return go == comp.gameObject;
+                }
+            }
+
+            return false;
+        }
 
         protected override void Awake()
         {
@@ -52,7 +82,7 @@ namespace Neo.StateMachine.Wrappers {
         [ContextMenu("Search For References Of", true)]
         private bool SearchForReferencesOfValidator()
         {
-            return Editor.StateMachineSearch.SearchForReferencesOfValidator(GetType());
+            return Editor.StateMachineSearch.SearchForComponentReferencesOfValidator(GetType());
         }
 
         [ContextMenu("Search For References Of")]

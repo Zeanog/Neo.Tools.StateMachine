@@ -13,7 +13,6 @@ public static class GameObjectExtensions {
             BuildFullName(self, builder.Value);
             return builder.Value.ToString();
         }
-
     }
 
     public static void BuildFullName( this GameObject self, System.Text.StringBuilder builder ) {
