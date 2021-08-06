@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    [SerializeField]
 	protected	FPSGunExample	m_Gun;
 
 	[SerializeField]
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	void	Start() {
-		m_Gun = GetComponentInChildren<FPSGunExample>();
+		//m_Gun = GetComponentInChildren<FPSGunExample>();
 	}
 	
 	void	Update() {
@@ -29,18 +30,20 @@ public class Player : MonoBehaviour {
 			translation[1] = 1.0f;
 		}
 
-		rotation.x = -Input.GetAxis("Mouse Y");
-		rotation.y = Input.GetAxis("Mouse X");
-
 		translation *= m_Speed * Time.deltaTime;
-		rotation *= m_RotationalSpeed * Time.deltaTime;
+        transform.Translate(translation[0], translation[1], translation[2]);
 
-		transform.Translate( translation[0], translation[1], translation[2] );
-		
-		transform.Rotate( rotation[0], 0.0f, 0.0f);
-		transform.Rotate( 0.0f, rotation[1], 0.0f);
+        if (Input.GetMouseButton(1))
+        {
+            rotation.x = -Input.GetAxis("Mouse Y");
+            rotation.y = Input.GetAxis("Mouse X");
+            rotation *= m_RotationalSpeed * Time.deltaTime;
 
-		if( Input.GetMouseButtonDown(0) ) {
+            transform.Rotate(rotation[0], 0.0f, 0.0f);
+            transform.Rotate(0.0f, rotation[1], 0.0f);
+        }
+
+        if ( Input.GetMouseButtonDown(0) ) {
 			m_Gun.StartUsing();
 		} else if( Input.GetMouseButtonUp(0) ) {
 			m_Gun.StopUsing();
