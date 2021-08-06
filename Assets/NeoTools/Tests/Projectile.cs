@@ -63,6 +63,8 @@ public class Projectile : AProjectile_Dynamic {
 
     public void ApplyForces()
     {
+        m_InvocationManager = new InvocationManager(this);
+
         GetComponent<Rigidbody>().AddRelativeForce(0.0f, 0.0f, m_Speed / Time.deltaTime, ForceMode.VelocityChange);
 
         ExceptionUtility.Verify<System.ArgumentOutOfRangeException>(m_TimeToFizzle > 0.0f);
@@ -70,7 +72,7 @@ public class Projectile : AProjectile_Dynamic {
     }
 
     void	Awake() {
-		m_InvocationManager = new InvocationManager( this );
+		
 	}
 	
 	void	Start() {
@@ -99,7 +101,7 @@ public class Projectile : AProjectile_Dynamic {
 	}
 
 	protected void	OnDestroy() {
-		m_InvocationManager.CancelAll();
+		m_InvocationManager?.CancelAll();
 	}
 
 	private System.Object[] args = new System.Object[2];
