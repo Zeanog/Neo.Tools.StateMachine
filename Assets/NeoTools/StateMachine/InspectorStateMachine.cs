@@ -53,9 +53,13 @@ namespace Neo.StateMachine.Wrappers {
             Log.SetExceptionHandler(UnityEngine.Debug.LogException);
         }
 
-        protected void Awake()
+        public InspectorStateMachine()
         {
             m_Controller = new StateMachine<InspectorStateMachine>(this);
+        }
+
+        protected void Awake()
+        {
             m_Controller.OnStateChange += delegate (State<InspectorStateMachine> current, State<InspectorStateMachine> previous)
             {
                 OnStateChange?.Invoke(current, previous);

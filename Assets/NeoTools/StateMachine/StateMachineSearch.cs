@@ -23,7 +23,7 @@ namespace Neo.StateMachine.Editor {
     }
 
     public class StateMachineSearch : EditorWindow {
-        [MenuItem("Neo/StateMachine/Search %#&s")]
+        [MenuItem("Neo/StateMachine/Search Code %#&s")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
@@ -55,7 +55,7 @@ namespace Neo.StateMachine.Editor {
                 if (index < 0)
                 {
                     m_PreviousCodeSearches.Insert(0, m_SearchString);
-                    if (m_PreviousCodeSearches.Count > 8)
+                    if (m_PreviousCodeSearches.Count > 5)
                     {
                         m_PreviousCodeSearches.RemoveAt(m_PreviousCodeSearches.Count - 1);
                     }
