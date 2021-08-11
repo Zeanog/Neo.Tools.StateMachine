@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	void	Start() {
-		//m_Gun = GetComponentInChildren<FPSGunExample>();
+        m_Gun.gameObject.SetActive(true);
 	}
 	
 	void	Update() {
