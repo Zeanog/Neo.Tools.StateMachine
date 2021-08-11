@@ -27,21 +27,21 @@ namespace Neo.StateMachine.Wrappers {
         //[FullSerializer.fsProperty]
         public InspectorState CurrentState {
             get {
-                return m_Controller == null ? null : FindOwner(transform, m_Controller.CurrentState);
+                return m_Controller == null ? null : FindInspectorState(transform, m_Controller.CurrentState);
             }
 
             set {
-                m_Controller.ChangeState(value.State, this);
+                m_Controller.ChangeState(value.State, null, this);
             }
         }
 
         public InspectorState PreviousState {
             get {
-                return m_Controller == null ? null : FindOwner(transform, m_Controller.PreviousState);
+                return m_Controller == null ? null : FindInspectorState(transform, m_Controller.PreviousState);
             }
         }
 
-        public Action<State<InspectorStateMachine>, State<InspectorStateMachine>> OnStateChange;
+        public Action<State<InspectorStateMachine>, Transition<InspectorStateMachine>, State<InspectorStateMachine>> OnStateChange;
 
         static InspectorStateMachine()
         {
@@ -60,20 +60,20 @@ namespace Neo.StateMachine.Wrappers {
 
         protected void Awake()
         {
-            m_Controller.OnStateChange += delegate (State<InspectorStateMachine> current, State<InspectorStateMachine> previous)
+            m_Controller.OnStateChange += delegate (State<InspectorStateMachine> current, Transition<InspectorStateMachine> transitionUsed, State<InspectorStateMachine> previous)
             {
-                OnStateChange?.Invoke(current, previous);
+                OnStateChange?.Invoke(current, transitionUsed, previous);
             };
         }
     
         protected System.Collections.IEnumerator  Start() {
-            ExceptionUtility.Verify<System.NullReferenceException>( m_InitialState != null, "Undefined 'm_InitialState'" );
+            ExceptionUtility.Verify<System.NullReferenceException>( m_InitialState != null, "Undefined 'm_InitialState'!  Please assign in Inspector." );
 
             using(var slip = DataStructureLibrary<WaitForEndOfFrame>.Instance.CheckOut()) {
                 yield return slip.Value;
             }
 
-            m_Controller.ChangeState( m_InitialState.State, this );
+            m_Controller.ChangeState( m_InitialState.State, null, this );
             StartCoroutine( "ProcessStateMachine" );
         }
 
@@ -128,10 +128,17 @@ namespace Neo.StateMachine.Wrappers {
             return m_Controller.FindPlug(name);
         }
 
-        protected static InspectorState FindOwner( Transform self, State<InspectorStateMachine> internalState )
+        public static InspectorState FindInspectorState( Transform self, State<InspectorStateMachine> internalState )
         {
             return self.VisitComponentInChildren<InspectorState>(delegate (InspectorState state) {
                 return state.State == internalState;
+            });
+        }
+
+        public static InspectorTransition FindInspectorTransition(Transform self, Transition<InspectorStateMachine> internalTransition)
+        {
+            return self.VisitComponentInChildren(delegate (InspectorTransition trans) {
+                return trans.Transition == internalTransition;
             });
         }
     }

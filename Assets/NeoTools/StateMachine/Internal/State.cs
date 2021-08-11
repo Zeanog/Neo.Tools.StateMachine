@@ -58,16 +58,24 @@ namespace Neo.StateMachine {
                 OnExit.Invoke(self, nextState);
             }
         }
-    
-        public State<OwnerType> AttemptStateChange( OwnerType self ) {
+
+        public State<OwnerType> AttemptStateChange(OwnerType self)
+        {
+            Transition<OwnerType> transitionUsed;
+            return AttemptStateChange(self, out transitionUsed);
+        }
+
+        public State<OwnerType> AttemptStateChange( OwnerType self, out Transition<OwnerType> transitionUsed ) {
             State<OwnerType>    nextState = null;
-    
+
+            transitionUsed = null;
             Transition<OwnerType> transition = null;
             for( int ix = 0; ix < m_ExitTransitionList.Count; ++ix ) {
                 transition = m_ExitTransitionList[ix];
             //foreach( Transition<OwnerType> transition in exitTransitionList ) {
                 nextState = transition.TransitionTo( self );
                 if( nextState != null ) {
+                    transitionUsed = transition;
                     return nextState;
                 }
             }

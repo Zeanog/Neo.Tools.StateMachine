@@ -42,8 +42,9 @@ namespace Neo.StateMachine.Editor {
             Repaint();
         }
 
-        protected void OnMonitoredStateChange(State<Neo.StateMachine.Wrappers.InspectorStateMachine> current, State<Neo.StateMachine.Wrappers.InspectorStateMachine> previous)
+        protected void OnMonitoredStateChange(State<Wrappers.InspectorStateMachine> current, Transition<Wrappers.InspectorStateMachine> transitionUsed, State<Wrappers.InspectorStateMachine> previous)
         {
+            m_TransitionUsed = transitionUsed;
             Repaint();
         }
 
@@ -66,7 +67,9 @@ namespace Neo.StateMachine.Editor {
         }
         protected string m_MonitoredStateMachineName;
 
-        protected void OnGUIState(string label, List<string> currentStateName)
+        protected Transition<Wrappers.InspectorStateMachine> m_TransitionUsed;
+
+        protected void OnGUIName(string label, List<string> name)
         {
             using (var nameBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut())
             using (var tabBuilderSlip = Neo.Utility.DataStructureLibrary<System.Text.StringBuilder>.Instance.CheckOut())
@@ -76,7 +79,7 @@ namespace Neo.StateMachine.Editor {
                 tabBuilderSlip.Value.Clear();
 
                 int indention = 0;
-                foreach (var subName in currentStateName)
+                foreach (var subName in name)
                 {
                     EditorGUILayout.BeginHorizontal();
 
@@ -145,9 +148,29 @@ namespace Neo.StateMachine.Editor {
 
                 EditorGUILayout.Space();
 
-                OnGUIState("Current State:", currentStateNameSlip.Value);
+                OnGUIName("Current State:", currentStateNameSlip.Value);
                 EditorGUILayout.Space();
-                OnGUIState("Previous State:", previousStateNameSlip.Value);
+                EditorGUILayout.Space();
+
+                using (var transitionUsedNameSlip = Neo.Utility.DataStructureLibrary<List<string>>.Instance.CheckOut())
+                {
+                    transitionUsedNameSlip.Value.Clear();
+
+                    if (m_TransitionUsed != null)
+                    {
+                        var inspTrans = Wrappers.InspectorStateMachine.FindInspectorTransition(m_MonitoredStateMachine.transform, m_TransitionUsed);
+                        if(inspTrans != null)
+                        {
+                            inspTrans.gameObject.BuildFullName(transitionUsedNameSlip.Value);
+                        }
+                    }
+                    OnGUIName("Transition Used:", transitionUsedNameSlip.Value);
+                }
+
+                EditorGUILayout.Space();
+                EditorGUILayout.Space();
+
+                OnGUIName("Previous State:", previousStateNameSlip.Value);
 
                 EditorGUILayout.Space();
             }

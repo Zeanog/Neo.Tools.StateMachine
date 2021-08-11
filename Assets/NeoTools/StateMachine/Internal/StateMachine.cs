@@ -27,7 +27,7 @@ namespace Neo.StateMachine {
         //[Save]
         public State<OwnerType>    PreviousState;
 
-        public Action<State<OwnerType>, State<OwnerType>>   OnStateChange;
+        public Action<State<OwnerType>, Transition<OwnerType>, State<OwnerType>>   OnStateChange;
 
         public StateMachine( OwnerType owner ) {
             m_Owner = owner;
@@ -37,7 +37,7 @@ namespace Neo.StateMachine {
             AddAssociation(m_Owner);
         }
  
-        public void ChangeState( State<OwnerType> nextState, OwnerType self ) {
+        public void ChangeState( State<OwnerType> nextState, Transition<OwnerType> transitionUsed, OwnerType self ) {
             if( CurrentState != null ) {
                 CurrentState.Exit( self, nextState );
             }
@@ -51,7 +51,7 @@ namespace Neo.StateMachine {
 
             if (OnStateChange != null)
             {
-                OnStateChange.Invoke(nextState, PreviousState);
+                OnStateChange.Invoke(nextState, transitionUsed, PreviousState);
             }
         }
     
@@ -59,10 +59,11 @@ namespace Neo.StateMachine {
             if( CurrentState == null ) {
                 return;
             }
-    
-            State<OwnerType> nextState = CurrentState.AttemptStateChange( m_Owner );
+
+            Transition<OwnerType> transitionUsed;
+            State<OwnerType> nextState = CurrentState.AttemptStateChange( m_Owner, out transitionUsed );
             if( nextState != null ) {
-                ChangeState( nextState, m_Owner );
+                ChangeState( nextState, transitionUsed, m_Owner );
             }
         }
 
