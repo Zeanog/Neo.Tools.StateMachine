@@ -27,7 +27,7 @@ namespace Neo.StateMachine.Wrappers {
         //[FullSerializer.fsProperty]
         public InspectorState CurrentState {
             get {
-                return m_Controller == null ? null : FindInspectorState(transform, m_Controller.CurrentState);
+                return m_Controller == null ? null : FindInspectorAlias(transform, m_Controller.CurrentState);
             }
 
             set {
@@ -37,7 +37,7 @@ namespace Neo.StateMachine.Wrappers {
 
         public InspectorState PreviousState {
             get {
-                return m_Controller == null ? null : FindInspectorState(transform, m_Controller.PreviousState);
+                return m_Controller == null ? null : FindInspectorAlias(transform, m_Controller.PreviousState);
             }
         }
 
@@ -128,14 +128,14 @@ namespace Neo.StateMachine.Wrappers {
             return m_Controller.FindPlug(name);
         }
 
-        public static InspectorState FindInspectorState( Transform self, State<InspectorStateMachine> internalState )
+        public static InspectorState FindInspectorAlias( Transform self, State<InspectorStateMachine> internalState )
         {
             return self.VisitComponentInChildren<InspectorState>(delegate (InspectorState state) {
                 return state.State == internalState;
             });
         }
 
-        public static InspectorTransition FindInspectorTransition(Transform self, Transition<InspectorStateMachine> internalTransition)
+        public static InspectorTransition FindInspectorAlias(Transform self, Transition<InspectorStateMachine> internalTransition)
         {
             return self.VisitComponentInChildren(delegate (InspectorTransition trans) {
                 return trans.Transition == internalTransition;

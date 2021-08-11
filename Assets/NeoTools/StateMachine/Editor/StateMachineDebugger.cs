@@ -42,9 +42,58 @@ namespace Neo.StateMachine.Editor {
             Repaint();
         }
 
+        public class StateSnapshot {
+            public State<Wrappers.InspectorStateMachine> Current {
+                get;
+                protected set;
+            }
+
+            public List<string> DecomposedName = new List<string>();
+
+            public void Update(Wrappers.InspectorStateMachine monitoredStateMachine, State<Wrappers.InspectorStateMachine> state)
+            {
+                DecomposedName.Clear();
+
+                Current = state;
+                var alias = Wrappers.InspectorStateMachine.FindInspectorAlias(monitoredStateMachine.transform, Current);
+                if (alias != null)
+                {
+                    alias.gameObject.BuildFullName(DecomposedName);
+                }
+            }
+        }
+
+        public class TransitionSnapshot {
+            public Transition<Wrappers.InspectorStateMachine> Current {
+                get;
+                protected set;
+            }
+
+            public List<string> DecomposedName = new List<string>();
+
+            public void Update(Wrappers.InspectorStateMachine monitoredStateMachine, Transition<Wrappers.InspectorStateMachine> state)
+            {
+                DecomposedName.Clear();
+
+                Current = state;
+                var alias = Wrappers.InspectorStateMachine.FindInspectorAlias(monitoredStateMachine.transform, Current);
+                if (alias != null)
+                {
+                    alias.gameObject.BuildFullName(DecomposedName);
+                }
+            }
+        }
+
+        protected StateSnapshot         m_PreviousState = new StateSnapshot();
+        protected TransitionSnapshot    m_TransitionUsed = new TransitionSnapshot();
+        protected StateSnapshot         m_CurrentState = new StateSnapshot();
+
         protected void OnMonitoredStateChange(State<Wrappers.InspectorStateMachine> current, Transition<Wrappers.InspectorStateMachine> transitionUsed, State<Wrappers.InspectorStateMachine> previous)
         {
-            m_TransitionUsed = transitionUsed;
+            m_PreviousState.Update(m_MonitoredStateMachine, previous);
+            m_TransitionUsed.Update(m_MonitoredStateMachine, transitionUsed);
+            m_CurrentState.Update(m_MonitoredStateMachine, current);
+
             Repaint();
         }
 
@@ -69,8 +118,6 @@ namespace Neo.StateMachine.Editor {
             }
         }
         protected string m_MonitoredStateMachineName;
-
-        protected Transition<Wrappers.InspectorStateMachine> m_TransitionUsed;
 
         protected void OnGUIName(string label, List<string> name)
         {
@@ -107,71 +154,36 @@ namespace Neo.StateMachine.Editor {
         {
             EditorGUILayout.LabelField("Selected State Machine", EditorStyles.boldLabel);
 
-            using (var currentStateNameSlip = Neo.Utility.DataStructureLibrary<List<string>>.Instance.CheckOut())
-            using (var previousStateNameSlip = Neo.Utility.DataStructureLibrary<List<string>>.Instance.CheckOut())
+            if (MonitoredStateMachine != null)
             {
-                currentStateNameSlip.Value.Clear();
-                previousStateNameSlip.Value.Clear();
-
-                if (MonitoredStateMachine != null)
+                EditorGUILayout.BeginHorizontal();
+                if (EditorGUILayout.LinkButton(m_MonitoredStateMachineName))
                 {
-                    if (MonitoredStateMachine.CurrentState != null)
-                    {
-                        MonitoredStateMachine.CurrentState.gameObject.BuildFullName(currentStateNameSlip);
-                    }
-
-                    if (MonitoredStateMachine.PreviousState != null)
-                    {
-                        MonitoredStateMachine.PreviousState.gameObject.BuildFullName(previousStateNameSlip);
-                    }
-
-                    EditorGUILayout.BeginHorizontal();
-                    if (EditorGUILayout.LinkButton(m_MonitoredStateMachineName))
-                    {
-                        GameObject stateGO = GameObject.Find(m_MonitoredStateMachineName);
-                        Selection.activeGameObject = stateGO;
-                    }
-                    EditorGUILayout.Space();
-                    if (GUILayout.Button("Clear", GUILayout.MaxWidth(75)))
-                    {
-                        MonitoredStateMachine = null;
-                        m_TransitionUsed = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-
-                    EditorGUILayout.Space();
-
-                    OnGUIName("Current State:", currentStateNameSlip.Value);
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    using (var transitionUsedNameSlip = Neo.Utility.DataStructureLibrary<List<string>>.Instance.CheckOut())
-                    {
-                        transitionUsedNameSlip.Value.Clear();
-
-                        if (m_TransitionUsed != null)
-                        {
-                            var inspTrans = Wrappers.InspectorStateMachine.FindInspectorTransition(m_MonitoredStateMachine.transform, m_TransitionUsed);
-                            if (inspTrans != null)
-                            {
-                                inspTrans.gameObject.BuildFullName(transitionUsedNameSlip.Value);
-                            }
-                        }
-                        OnGUIName("Transition Used:", transitionUsedNameSlip.Value);
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.Space();
-
-                    OnGUIName("Previous State:", previousStateNameSlip.Value);
-
-                    EditorGUILayout.Space();
-                } else
-                {
-                    EditorGUILayout.LabelField("Select a state machine game object");
+                    GameObject stateGO = GameObject.Find(m_MonitoredStateMachineName);
+                    Selection.activeGameObject = stateGO;
                 }
+                EditorGUILayout.Space();
+                if (GUILayout.Button("Clear", GUILayout.MaxWidth(75)))
+                {
+                    MonitoredStateMachine = null;
+                }
+                EditorGUILayout.EndHorizontal();
 
-                
+                EditorGUILayout.Space();
+
+                OnGUIName("Current State:", m_CurrentState.DecomposedName);
+                EditorGUILayout.Space();
+                EditorGUILayout.Space();
+                OnGUIName("Transition Used:", m_TransitionUsed.DecomposedName);
+                EditorGUILayout.Space();
+                EditorGUILayout.Space();
+                OnGUIName("Previous State:", m_PreviousState.DecomposedName);
+
+                EditorGUILayout.Space();
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Select a state machine game object");
             }
         }
     }
