@@ -77,7 +77,10 @@ public class FPSGunExample : MonoBehaviour {
 
     #region State Interfaces
     public void		LaunchProjectiles() {
-		m_Shell.LaunchProjectiles( m_Spread, transform );
+		if( m_Shell.LaunchProjectiles( m_Spread, transform ) )
+        {
+            UseAmmo();
+        }
 	}
 	
 	public void		UseAmmo() {

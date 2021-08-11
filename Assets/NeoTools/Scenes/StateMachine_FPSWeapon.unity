@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39a9848430f944c1bfff1be2d3ddc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Gun: {fileID: 1491710532}
+  m_Gun: {fileID: 1405605393}
   m_Speed: 5
   m_RotationalSpeed: 50
 --- !u!81 &370475513
@@ -1447,11 +1447,11 @@ MonoBehaviour:
   m_StateMachine: {fileID: 1405605391}
   m_Shell:
     m_NumProjectiles: 5
-    m_ProjectilePrefab: {fileID: 100000, guid: 4c8d1ccd44f9545ab81abcbbff0122f8, type: 3}
+    m_ProjectilePrefab: {fileID: 100000, guid: 4159be06ea60c4da68c209b2636beac0, type: 3}
   m_Clip:
     m_Capacity: 100
     m_Count: 100
-  m_RoundsPerSec: 1
+  m_RoundsPerSec: 2
   m_Spread: 10
 --- !u!114 &1405605394
 MonoBehaviour:
