@@ -1,5 +1,7 @@
 "# Neo.Tools.StateMachine" 
 
+Image Logo by @sketchingsands
+
 Welcome to Neo.Tools.Statemachine!  
 
 As the name suggests this is just taking an old tool and making it new again.  Neo.Tools.Statemachine seperates the transition logic from the statemachine logic.  Allowing
