@@ -62,3 +62,5 @@ what state holds onto a transition.  Added ability to search states OnEnter/OnEx
 ------------------------------------------------
 8/11/21 - Added ability to see what transition was used for state change in debugger.  Would like to be able to set a break point on a state and possibly a transition.
 Also cleaned up debugger layout.
+
+8/16/21 - Added ability to cycle weapons in gun example scene
