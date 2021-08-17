@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class Shell {
+public class Shell : IDisposable {
 	[SerializeField]
 	protected int			m_NumProjectiles;
 
@@ -17,6 +17,15 @@ public class Shell {
         m_Projectile.SetActive(false);
         m_ProjInterface = m_Projectile.GetComponent<AProjectile>();
         m_ProjInterface.EnsureCache();
+    }
+
+    public void Dispose()
+    {
+        if(m_Projectile != null)
+        {
+            GameObject.Destroy(m_Projectile);
+            m_Projectile = null;
+        }
     }
 
 	public virtual bool	LaunchProjectiles( float spread, Transform startTransform ) {

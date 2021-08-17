@@ -1,10 +1,81 @@
 using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class Inventory {
+    public class InventoryItem {
+        public int Index;
+        public FPSGunExample Instance;
+
+        public bool IsValid {
+            get {
+                return Index >= 0;
+            }
+        }
+
+        public void SwitchTo( int index, GameObject prefab, GameObject parent )
+        {
+            if (Instance != null)
+            {
+                GameObject.Destroy(Instance.gameObject);
+            }
+
+            Index = index;
+            GameObject go = GameObject.Instantiate(prefab, parent.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.identity;
+            
+            Instance = go.GetComponent<FPSGunExample>();
+            go.SetActive(true);
+        }
+    }
+
+    [SerializeField]
+    protected List<GameObject> m_FirearmPrefabs;
+
+    [SerializeField]
+    protected int m_InitialWeaponIndex;
+
+    public InventoryItem CurrentInventoryItem {
+        get;
+        protected set;
+    }
+
+    public Inventory()
+    {
+        CurrentInventoryItem = new InventoryItem() { Index = -1, Instance = null };
+    }
+
+    public void CycleWeapon(int direction, GameObject owner)
+    {
+        if (CurrentInventoryItem.IsValid)
+        {
+            CurrentInventoryItem.Instance.Lower();
+        }
+
+        int nextIndex = (CurrentInventoryItem.Index + direction) % m_FirearmPrefabs.Count;
+        if(nextIndex < 0)
+        {
+            nextIndex = m_FirearmPrefabs.Count - 1;
+        }
+
+        CurrentInventoryItem.SwitchTo(nextIndex, m_FirearmPrefabs[nextIndex], owner);
+
+        if (CurrentInventoryItem.IsValid)
+        {
+            CurrentInventoryItem.Instance.Raise();
+        }
+    }
+}
 
 public class Player : MonoBehaviour {
-    [SerializeField]
-	protected	FPSGunExample	m_Gun;
+    //[SerializeField]
+    //protected	FPSGunExample	m_Gun;
 
-	[SerializeField]
+    [SerializeField]
+    protected Inventory m_Inventory;
+
+    [SerializeField]
 	protected float				m_Speed;
 
 	[SerializeField]
@@ -14,7 +85,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	void	Start() {
-        m_Gun.gameObject.SetActive(true);
+        
 	}
 	
 	void	Update() {
@@ -44,13 +115,31 @@ public class Player : MonoBehaviour {
         }
 
         if ( Input.GetMouseButtonDown(0) ) {
-			m_Gun.StartUsing();
+            if (m_Inventory.CurrentInventoryItem.IsValid)
+            {
+                m_Inventory.CurrentInventoryItem.Instance.StartUsing();
+            }
 		} else if( Input.GetMouseButtonUp(0) ) {
-			m_Gun.StopUsing();
+            if (m_Inventory.CurrentInventoryItem.IsValid)
+            {
+                m_Inventory.CurrentInventoryItem.Instance.StopUsing();
+            }
 		}
 
 		if( Input.GetKeyDown(KeyCode.R) ) {
-			m_Gun.Reload();
+            if (m_Inventory.CurrentInventoryItem.IsValid)
+            {
+                m_Inventory.CurrentInventoryItem.Instance.Reload();
+            }
 		}
-	}
+
+        float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
+        if(mouseWheel > 0.0f)
+        {
+            m_Inventory.CycleWeapon(1, gameObject);
+        } else if(mouseWheel < 0.0f)
+        {
+            m_Inventory.CycleWeapon(-1, gameObject);
+        }
+    }
 }

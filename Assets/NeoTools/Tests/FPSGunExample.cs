@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
 using Neo.StateMachine.Wrappers;
 
 [Serializable]
@@ -38,6 +39,7 @@ public class Magazine {
 	}
 }
 
+[DisallowMultipleComponent]
 public class FPSGunExample : MonoBehaviour {
     [SerializeField]
     protected InspectorStateMachine m_StateMachine;
@@ -53,12 +55,20 @@ public class FPSGunExample : MonoBehaviour {
 	
 	[SerializeField]
 	protected float			m_Spread = 10.0f; // In Degrees
-	
-	void	Awake() {
+
+    protected Dictionary<string, Action> m_OnAnimationStartHandlers = new Dictionary<string, Action>();
+    protected Dictionary<string, Action> m_OnAnimationCompleteHandlers = new Dictionary<string, Action>();
+
+    void	Awake() {
 		m_Shell.Awake();
 
         m_StateMachine.AddAssociation( this );
 	}
+
+    protected void OnDestroy()
+    {
+        m_Shell.Dispose();
+    }
 
     public void StartUsing()
     {
@@ -75,9 +85,19 @@ public class FPSGunExample : MonoBehaviour {
         m_StateMachine.TriggerEvent("Reload");
     }
 
+    public void Raise()
+    {
+        //m_StateMachine.TriggerEvent("Raise");
+    }
+
+    public void Lower()
+    {
+        //m_StateMachine.TriggerEvent("Lower");
+    }
+
     #region State Interfaces
     public void		LaunchProjectiles() {
-		if( m_Shell.LaunchProjectiles( m_Spread, transform ) )
+		if( m_Shell.LaunchProjectiles(m_Spread, transform) )
         {
             UseAmmo();
         }
@@ -94,8 +114,8 @@ public class FPSGunExample : MonoBehaviour {
 	public bool		IsOutOfAmmo() {
         return m_Clip.IsEmpty;
 	}
-	
-	public float	ReloadDuration {
+
+    public float	ReloadDuration {
 		get {
 			return 1.0f;
 		}
