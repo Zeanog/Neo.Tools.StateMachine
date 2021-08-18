@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Behaviour: 1
-  m_TextColor: {r: 0.6415094, g: 0, b: 0, a: 1}
+  m_TextColor: {r: 0, g: 0.6431373, b: 0.0071330317, a: 1}
 --- !u!1001 &2639787328887729240
 PrefabInstance:
   m_ObjectHideFlags: 0
