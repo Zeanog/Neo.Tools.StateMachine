@@ -104,25 +104,12 @@ public class Projectile : AProjectile_Dynamic {
 		m_InvocationManager?.CancelAll();
 	}
 
-	private System.Object[] args = new System.Object[2];
-	private System.Type[] argTypes = new System.Type[2];
 	protected void	OnCollisionEnter( Collision collision ) {
-		args[0] = this;
-		args[1] = collision;
-		argTypes[0] = GetType();
-		argTypes[1] = collision.GetType();
-
 		gameObject.SetActive( false );
 
 		ADamageDispatcher[] dispatchers = this.GetComponents<ADamageDispatcher>();
 		foreach( ADamageDispatcher dispatcher in dispatchers ) {
-			MethodInfo info = ReflectionUtils.FindMethodInfo( dispatcher.GetType(), "Dispatch", argTypes );
-			if( info == null ) {
-				UnityEngine.Debug.LogError( string.Format("Unable to find method {0}", ReflectionUtils.BuildMethodInfoError("Dispatch", argTypes)) );
-				continue;
-			}
-			
-			info.Invoke( dispatcher, args );
+            dispatcher.Dispatch(this, collision);
 		}
 
 		Destroy( gameObject );

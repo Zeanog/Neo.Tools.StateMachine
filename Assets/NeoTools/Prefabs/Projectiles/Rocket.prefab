@@ -79,7 +79,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FxPrefab: {fileID: 100000, guid: 5b3b2d600a10541b79c9c1ee61017fda, type: 3}
   m_Damage: 15
-  m_Radius: 20
+  m_Force: 300
+  m_Radius: 30
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0

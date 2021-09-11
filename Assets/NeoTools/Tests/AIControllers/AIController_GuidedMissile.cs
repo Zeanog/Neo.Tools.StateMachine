@@ -21,8 +21,7 @@ public class AIController_GuidedMissile : AIController {
         offsets.x = m_NoiseGain.x * xFrac;
         offsets.y = m_NoiseGain.y * yFrac;
         offsets.z = 0.0f;
-
-        
+ 
 
         //FTransform transform(self->GetActorRotation());
         //FVector denoisedLocation = actorLoc - m_NoiseOffsets_WorldSpace;

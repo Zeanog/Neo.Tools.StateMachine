@@ -9,4 +9,9 @@ public class DamageReceiver : ADamageReceiver {
 			Destroy( gameObject );
 		}
 	}
+
+    public override void ApplyForce(Vector3 amount)
+    {
+        
+    }
 }

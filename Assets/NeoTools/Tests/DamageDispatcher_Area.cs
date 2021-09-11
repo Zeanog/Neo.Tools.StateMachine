@@ -3,12 +3,12 @@ using UnityEngine;
 public class DamageDispatcher_Area : ADamageDispatcher {
 	[SerializeField]
 	protected float	m_Radius = 10.0f;
-	
-	protected void	Start() {
+
+    protected void	Start() {
 
 	}
 	
-	public void Dispatch( AProjectile owner ) {
+	public override void Dispatch( AProjectile owner ) {
 		CreateFx( owner.transform.position, owner.transform.rotation );
 
 		Collider[] areaHits = Physics.OverlapSphere( owner.transform.position, m_Radius );
@@ -21,11 +21,26 @@ public class DamageDispatcher_Area : ADamageDispatcher {
 				continue;
 			}
 
-			Debug.Log( areaHit.name );
-		}
+            var forceDir = (areaHit.transform.position - owner.transform.position);
+            var rayCasts = Physics.RaycastAll(owner.transform.position, forceDir);
+            if (rayCasts.Length > 0)
+            {
+                var damageReceiver = areaHit.gameObject.GetComponent<DamageReceiver>();
+                if (damageReceiver != null)
+                {
+                    damageReceiver.Damage(m_Damage);
+                    //damageReceiver.ApplyForce(forceDir * m_Force);                    
+                }
+                var rigidBody = areaHit.gameObject.GetComponent<Rigidbody>();
+                if (rigidBody != null && m_Force > 0.0f)
+                {
+                    rigidBody.AddExplosionForce(m_Force, owner.transform.position, m_Radius);
+                }
+            }
+        }
 	}
 	
-	public void Dispatch( AProjectile owner, Collision collision ) {
+	public override void Dispatch( AProjectile owner, Collision collision ) {
 		if( collision.contacts.Length <= 0 ) {
 			return;
 		}
@@ -42,11 +57,26 @@ public class DamageDispatcher_Area : ADamageDispatcher {
 				continue;
 			}
 
-			areaHit.gameObject.SendMessage( "Damage", m_Damage, SendMessageOptions.DontRequireReceiver );
-		}
+            var forceDir = (areaHit.transform.position - owner.transform.position);
+            var rayCasts = Physics.RaycastAll(owner.transform.position, forceDir);
+            if (rayCasts.Length > 0)
+            {
+                var damageReceiver = areaHit.gameObject.GetComponent<DamageReceiver>();
+                if (damageReceiver != null)
+                {
+                    damageReceiver.Damage(m_Damage);
+                    //damageReceiver.ApplyForce(forceDir * m_Force);                    
+                }
+                var rigidBody = areaHit.gameObject.GetComponent<Rigidbody>();
+                if (rigidBody != null && m_Force > 0.0f)
+                {
+                    rigidBody.AddExplosionForce(m_Force, owner.transform.position, m_Radius);
+                }
+            }
+        }
 	}
 	
-	public void Dispatch( AProjectile owner, RaycastHit[] hits ) {
+	public override void Dispatch( AProjectile owner, RaycastHit[] hits ) {
 		if( hits.Length <= 0 ) {
 			return;
 		}
@@ -63,7 +93,22 @@ public class DamageDispatcher_Area : ADamageDispatcher {
 				continue;
 			}
 
-			areaHit.gameObject.SendMessage( "Damage", m_Damage, SendMessageOptions.DontRequireReceiver );
-		}
+            var forceDir = (areaHit.transform.position - owner.transform.position);
+            var rayCasts = Physics.RaycastAll(owner.transform.position, forceDir);
+            if (rayCasts.Length > 0)
+            {
+                var damageReceiver = areaHit.gameObject.GetComponent<DamageReceiver>();
+                if (damageReceiver != null)
+                {
+                    damageReceiver.Damage(m_Damage);
+                    //damageReceiver.ApplyForce(forceDir * m_Force);                    
+                }
+                var rigidBody = areaHit.gameObject.GetComponent<Rigidbody>();
+                if (rigidBody != null && m_Force > 0.0f)
+                {
+                    rigidBody.AddExplosionForce(m_Force, owner.transform.position, m_Radius);
+                }
+            }
+        }
 	}
 }

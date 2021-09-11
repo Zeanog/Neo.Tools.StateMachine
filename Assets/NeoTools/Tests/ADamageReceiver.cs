@@ -17,8 +17,9 @@ public abstract class ADamageReceiver : MonoBehaviour {
 	}
 
 	public abstract void		Damage( float amount );
+    public abstract void        ApplyForce(Vector3 amount);
 
-	public virtual void			Heal() {
+    public virtual void			Heal() {
 		Durability = m_MaxDurability;
 	}
 

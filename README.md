@@ -65,3 +65,6 @@ Also cleaned up debugger layout.
 
 ------------------------------------------------
 8/16/21 - Added ability to cycle weapons in gun example scene
+
+------------------------------------------------
+9/11/2021 - Added area effect force in damage dispatchers
