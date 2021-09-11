@@ -119,7 +119,7 @@ public class Player : MonoBehaviour {
             {
                 m_Inventory.CurrentInventoryItem.Instance.StartUsing();
             }
-		} else if( Input.GetMouseButtonUp(0) ) {
+		} else if( !Input.GetMouseButton(0)) {
             if (m_Inventory.CurrentInventoryItem.IsValid)
             {
                 m_Inventory.CurrentInventoryItem.Instance.StopUsing();
