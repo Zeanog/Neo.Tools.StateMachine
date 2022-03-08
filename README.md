@@ -40,7 +40,7 @@ Example
 
 Uses Antlr to generate parser and lexer
 
-I have used this to manage menus in projects for Great Wolf Lodge and Kennedy Space Center
+I have used this in projects for Great Wolf Lodge and Kennedy Space Center
 
 Also included:
 HierarchyTextHighlighter: 
