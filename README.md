@@ -68,3 +68,6 @@ Also cleaned up debugger layout.
 
 ------------------------------------------------
 9/11/2021 - Added area effect force in damage dispatchers
+
+------------------------------------------------
+8/19/2022 - If anyone has any questions or thoughts please feel free to let me know.
