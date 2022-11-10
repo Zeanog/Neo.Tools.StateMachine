@@ -4,6 +4,8 @@ Image Logo by @sketchingsands
 
 Welcome to Neo.Tools.Statemachine!  
 
+If anyone has any questions or thoughts please feel free to let me know.
+
 As the name suggests this is just taking an old tool and making it new again.  Neo.Tools.Statemachine seperates the transition logic from the statemachine logic.  Allowing
 you to then script the transition logic via our simple scripting language.  
 
@@ -69,5 +71,3 @@ Also cleaned up debugger layout.
 ------------------------------------------------
 9/11/2021 - Added area effect force in damage dispatchers
 
-------------------------------------------------
-8/19/2022 - If anyone has any questions or thoughts please feel free to let me know.
