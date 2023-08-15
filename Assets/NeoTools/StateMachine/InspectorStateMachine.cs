@@ -118,16 +118,6 @@ namespace Neo.StateMachine.Wrappers {
             return m_Controller.FindAssociatedOnDelayMethod(methodName);
         }
 
-        public void RegisterPlug(StaticString name, TransitionPlug<float> plug)
-        {
-            m_Controller.RegisterPlug(name, plug);
-        }
-
-        public TransitionPlug<float> FindPlug(StaticString name)
-        {
-            return m_Controller.FindPlug(name);
-        }
-
         public static InspectorState FindInspectorAlias( Transform self, State<InspectorStateMachine> internalState )
         {
             return self.VisitComponentInChildren<InspectorState>(delegate (InspectorState state) {

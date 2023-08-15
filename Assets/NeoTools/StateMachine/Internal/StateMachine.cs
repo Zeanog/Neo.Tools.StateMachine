@@ -14,9 +14,6 @@ namespace Neo.StateMachine {
         void  RemoveAssociation(System.Object obj);
         TransitionOnStateDelegate FindAssociatedOnStateMethod( string methodName );
         TransitionOnDelayDelegate FindAssociatedOnDelayMethod(string methodName);
-
-        void  RegisterPlug(StaticString name, TransitionPlug<float> plug);
-        TransitionPlug<float> FindPlug(StaticString name);
     }
 
     public class StateMachine<OwnerType> where OwnerType : class, IStateMachineOwner {
@@ -38,21 +35,14 @@ namespace Neo.StateMachine {
         }
  
         public void ChangeState( State<OwnerType> nextState, Transition<OwnerType> transitionUsed, OwnerType self ) {
-            if( CurrentState != null ) {
-                CurrentState.Exit( self, nextState );
-            }
-    
+            CurrentState?.Exit(self, nextState);
+
             PreviousState = CurrentState;
             CurrentState = nextState;
-    
-            if( CurrentState != null ) {
-                CurrentState.Enter( self, PreviousState );
-            }
 
-            if (OnStateChange != null)
-            {
-                OnStateChange.Invoke(nextState, transitionUsed, PreviousState);
-            }
+            CurrentState?.Enter(self, PreviousState);
+
+            OnStateChange?.Invoke(nextState, transitionUsed, PreviousState);
         }
     
         public void    Evaluate() {// Called by owner
@@ -70,13 +60,13 @@ namespace Neo.StateMachine {
         protected Dictionary<string, TransitionEventDelegate>     m_DelegateMap = new Dictionary<string, TransitionEventDelegate>();
         public void RegisterEvent(StaticString key, TransitionEventDelegate d)
         {
-            try
-            {
-                m_DelegateMap[key.ToString()] += d.Invoke;
-            }
-            catch (KeyNotFoundException)
+            if(!m_DelegateMap.ContainsKey(key.ToString()))
             {
                 m_DelegateMap.Add(key.ToString(), d.Invoke);
+            }
+            else
+            {
+                m_DelegateMap[key.ToString()] += d.Invoke;
             }
         }
 
@@ -192,26 +182,6 @@ namespace Neo.StateMachine {
                 return null;
             }
             catch( Exception ex ) {
-                Log.Exception(ex);
-                return null;
-            }
-        }
-
-        protected Dictionary<StaticString, TransitionPlug<float>>   m_Plugs = new Dictionary<StaticString, TransitionPlug<float>>();
-
-        public void RegisterPlug(StaticString name, TransitionPlug<float> plug)
-        {
-            m_Plugs.Add(name, plug);
-        }
-
-        public TransitionPlug<float> FindPlug(StaticString name)
-        {
-            try
-            {
-                return m_Plugs[name];
-            }
-            catch (KeyNotFoundException ex)
-            {
                 Log.Exception(ex);
                 return null;
             }

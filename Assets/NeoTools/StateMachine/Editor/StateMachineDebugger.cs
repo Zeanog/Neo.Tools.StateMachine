@@ -56,10 +56,7 @@ namespace Neo.StateMachine.Editor {
 
                 Current = state;
                 var alias = Wrappers.InspectorStateMachine.FindInspectorAlias(monitoredStateMachine.transform, Current);
-                if (alias != null)
-                {
-                    alias.gameObject.BuildFullName(DecomposedName);
-                }
+                alias?.gameObject.BuildFullName(DecomposedName);
             }
         }
 
@@ -77,10 +74,7 @@ namespace Neo.StateMachine.Editor {
 
                 Current = state;
                 var alias = Wrappers.InspectorStateMachine.FindInspectorAlias(monitoredStateMachine.transform, Current);
-                if (alias != null)
-                {
-                    alias.gameObject.BuildFullName(DecomposedName);
-                }
+                alias?.gameObject.BuildFullName(DecomposedName);
             }
         }
 

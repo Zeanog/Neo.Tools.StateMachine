@@ -32,8 +32,6 @@ public class Projectile_Trace : AProjectile_Static {
 		}
 	}
 
-	private System.Object[] args = new System.Object[2];
-	private System.Type[] argTypes = new System.Type[2];
 	public override bool	Launch( float spread, Transform startTransform ) {
 		ExceptionUtility.Verify<System.ArgumentNullException>( m_Range > 0.0f );
 		ExceptionUtility.Verify<System.ArgumentNullException>( m_Dispatchers != null );
@@ -45,20 +43,9 @@ public class Projectile_Trace : AProjectile_Static {
 		}
 
 		System.Array.Sort( hits, ZDistanceSort.Instance );
-
-		args[0] = this;
-		args[1] = hits;
-		argTypes[0] = GetType();
-		argTypes[1] = hits.GetType();
 		
 		foreach( ADamageDispatcher dispatcher in m_Dispatchers ) {
-			MethodInfo info = ReflectionUtils.FindMethodInfo( dispatcher.GetType(), "Dispatch", argTypes );
-			if( info == null ) {
-				UnityEngine.Debug.LogError( string.Format("Unable to find method {0}", ReflectionUtils.BuildMethodInfoError("Dispatch", argTypes)) );
-				continue;
-			}
-
-			info.Invoke( dispatcher, args );
+            dispatcher.Dispatch(this, hits);
 		}
 
 		return true;

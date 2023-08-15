@@ -12,8 +12,8 @@ public class Shell : IDisposable {
 	private GameObject		m_Projectile = null;
     protected AProjectile m_ProjInterface;
 
-    public void	Awake() {
-		m_Projectile = GameObject.Instantiate( m_ProjectilePrefab, Vector3.zero, Quaternion.identity ) as GameObject;
+    public void	Awake(GameObject owner) {
+		m_Projectile = GameObject.Instantiate( m_ProjectilePrefab, Vector3.zero, Quaternion.identity, owner.transform ) as GameObject;
         m_Projectile.SetActive(false);
         m_ProjInterface = m_Projectile.GetComponent<AProjectile>();
         m_ProjInterface.EnsureCache();

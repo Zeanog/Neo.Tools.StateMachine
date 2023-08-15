@@ -60,7 +60,7 @@ public class FPSGunExample : MonoBehaviour {
     protected Dictionary<string, Action> m_OnAnimationCompleteHandlers = new Dictionary<string, Action>();
 
     void	Awake() {
-		m_Shell.Awake();
+		m_Shell.Awake(gameObject);
 
         m_StateMachine.AddAssociation( this );
 	}

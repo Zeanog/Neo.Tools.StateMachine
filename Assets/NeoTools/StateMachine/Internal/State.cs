@@ -13,7 +13,7 @@ namespace Neo.StateMachine {
         }
     	//[Save]
         protected float         m_TimeEnterState = 0.0f;
-        protected float         m_DurationInState {
+        public float            DurationInState {
     		get {
     			return Clock.Time() - m_TimeEnterState;
     		}
@@ -21,42 +21,23 @@ namespace Neo.StateMachine {
 
         public Action<OwnerType, State<OwnerType>>   OnEnter;
         public Action<OwnerType, State<OwnerType>>   OnExit;
-    	
-    	protected Dictionary<string, TransitionPlug<float>>	m_TransitionPlugs = new Dictionary<string, TransitionPlug<float>>();
 
         public virtual void Enter( OwnerType self, State<OwnerType> prevState ) {
             m_TimeEnterState = Clock.Time();
-    
-            //Transition<OwnerType> transition = null;
-            //for( int ix = 0; ix < exitTransitionList.Count; ++ix ) {
-            //    transition = exitTransitionList[ix];
-            //    transition.StateEntered( self );
-            //}
 
             foreach( Transition<OwnerType> transition in m_ExitTransitionList ) {
                 transition.StateEntered( self );
             }
 
-            if (OnEnter != null)
-            {
-                OnEnter.Invoke(self, prevState);
-            }
+            OnEnter?.Invoke(self, prevState);
         }
     
         public virtual void Exit( OwnerType self, State<OwnerType> nextState ) {
-            //Transition<OwnerType> transition = null;
-            //for( int ix = 0; ix < exitTransitionList.Count; ++ix ) {
-            //    transition = exitTransitionList[ix];
-            //    transition.StateExited( self );
-            //}
             foreach( Transition<OwnerType> transition in m_ExitTransitionList ) {
                 transition.StateExited( self );
             }
 
-            if (OnExit != null)
-            {
-                OnExit.Invoke(self, nextState);
-            }
+            OnExit?.Invoke(self, nextState);
         }
 
         public State<OwnerType> AttemptStateChange(OwnerType self)
@@ -72,7 +53,6 @@ namespace Neo.StateMachine {
             Transition<OwnerType> transition = null;
             for( int ix = 0; ix < m_ExitTransitionList.Count; ++ix ) {
                 transition = m_ExitTransitionList[ix];
-            //foreach( Transition<OwnerType> transition in exitTransitionList ) {
                 nextState = transition.TransitionTo( self );
                 if( nextState != null ) {
                     transitionUsed = transition;
@@ -86,18 +66,6 @@ namespace Neo.StateMachine {
         public  void        AddTransition( Transition<OwnerType> transition ) {
             m_ExitTransitionList.Add( transition );
         }
-    	
-    	public void			AddPlug( string name, TransitionPlug<float> plug ) {
-    		m_TransitionPlugs.Add( name, plug );
-    	}
-    	
-    	public void			SetTransitionValue( string name, float val ) {
-    		try {
-    			m_TransitionPlugs[ name ].Value = val;
-    		} catch( KeyNotFoundException e ) {
-    			Log.Error( e );
-    		}
-    	}
     }
     
     //public class State<OwnerType, Parm1Type> : State<OwnerType> where OwnerType : class {

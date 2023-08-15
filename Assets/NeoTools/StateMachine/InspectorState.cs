@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Neo.Utility;
 
 namespace Neo.StateMachine.Wrappers {
     // This whole class is a hack to work around the fact that Unity wont show the generic events in the parent class in the inspector
@@ -55,16 +56,17 @@ namespace Neo.StateMachine.Wrappers {
             State.OnExit += m_OnExit.Invoke;
 
             m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
-                Debug.LogFormat("Entering state '{0}'", gameObject.name);
+                //Log.FormatObject("Entering state '{0}'", gameObject.name);
 
 #if UNITY_EDITOR
                 UnityEditor.EditorGUIUtility.PingObject(gameObject.GetInstanceID());
 #endif
             });
 
-            //m_OnExit.AddListener(delegate ( InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
-            //    Debug.LogFormat("Exiting state '{0}'", gameObject.name);
-            //});
+            m_OnExit.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState)
+            {
+                //Log.FormatObject("Exiting state '{0}'", gameObject.name);
+            });
         }
 
         protected override void OnDestroy()
