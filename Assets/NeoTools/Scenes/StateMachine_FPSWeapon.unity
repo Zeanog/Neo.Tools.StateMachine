@@ -339,6 +339,8 @@ MonoBehaviour:
   m_Inventory:
     m_FirearmPrefabs:
     - {fileID: 4053114845229247736, guid: 8b7892725f6a6af459a2fc100423df5d, type: 3}
+    - {fileID: 4487561924242024478, guid: 5bf0106b4d32ce24a828ed88028c27d2, type: 3}
+    - {fileID: 1109743319191928986, guid: 659edcdf2ddda2d44bc5c388fcf581fa, type: 3}
     m_InitialWeaponIndex: 0
   m_Speed: 50
   m_RotationalSpeed: 250

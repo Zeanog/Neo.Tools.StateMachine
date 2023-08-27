@@ -158,6 +158,11 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: WeaponDef, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 7453069550997138896, guid: e7ad9e31f2b7fc243aac218f7743d21b, type: 3}
+      propertyPath: m_Code
+      value: "{\n   OnEvent onStartFire( StartUsing );\n   OnState outOfAmmo( IsOutOfAmmo
+        );\n   OnDelay fireDelay( UseDelay );\n}\nonStartFire & !outOfAmmo"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7ad9e31f2b7fc243aac218f7743d21b, type: 3}
 --- !u!4 &4264022603321320077 stripped

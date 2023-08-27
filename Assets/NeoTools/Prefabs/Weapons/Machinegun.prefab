@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4487561924242024478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9512863, y: -3.4385834, z: 1.494257}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -111,6 +111,11 @@ PrefabInstance:
     - target: {fileID: 3372872909256953817, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
       propertyPath: m_Name
       value: MachinegunDef
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601196024082152019, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
+      propertyPath: m_Code
+      value: "{\n   OnEvent onStartFire( StartUsing );\n   OnState outOfAmmo( IsOutOfAmmo
+        );\n   OnDelay fireDelay( UseDelay );\n}\nonStartFire & !outOfAmmo"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}

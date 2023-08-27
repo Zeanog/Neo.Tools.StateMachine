@@ -59,14 +59,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1370619426641964910}
     m_Modifications:
-    - target: {fileID: 1753564103113255083, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
-      propertyPath: Magazine.m_Count
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1753564103113255083, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
-      propertyPath: Magazine.m_Capacity
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 3034327005524050036, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
       propertyPath: m_RootOrder
       value: 0
