@@ -4,85 +4,71 @@ using System;
 using System.Collections.Generic;
 using Neo.StateMachine.Wrappers;
 
-[Serializable]
-public class Magazine {
-	[SerializeField]
-	protected	int m_Capacity = 1;
-
-	[SerializeField]
-	protected	int	m_Count = 1;
-
-	public int	Count {
-		get {
-			return m_Count;
-		}
-	}
-	
-	public	void	Reload() {
-		m_Count = m_Capacity;
-	}
-	
-	public void		Use() {
-		m_Count = Mathf.Clamp( Count - 1, 0, m_Capacity );
-	}
-	
-	public bool		IsEmpty {
-		get {
-			return Count <= 0;
-		}
-	}
-	
-	public bool		IsFull {
-		get {
-			return Count >= m_Capacity;
-		}
-	}
-}
-
 [DisallowMultipleComponent]
 public class FPSGunExample : MonoBehaviour {
     [SerializeField]
-    protected InspectorStateMachine m_StateMachine;
+    protected List<InspectorStateMachine> m_StateMachines;
 
-	[SerializeField]
-	protected Shell			m_Shell;
-	
-	[SerializeField]
-	protected Magazine		m_Clip;
-	
-	[SerializeField]
-	protected float			m_RoundsPerSec;
-	
-	[SerializeField]
-	protected float			m_Spread = 10.0f; // In Degrees
+    [SerializeField]
+    protected List<WeaponDef> m_WeaponModes;
 
     protected Dictionary<string, Action> m_OnAnimationStartHandlers = new Dictionary<string, Action>();
     protected Dictionary<string, Action> m_OnAnimationCompleteHandlers = new Dictionary<string, Action>();
 
     void	Awake() {
-		m_Shell.Awake(gameObject);
-
-        m_StateMachine.AddAssociation( this );
+        for(int ix = 0; ix < m_StateMachines.Count; ++ix )
+        {
+            m_WeaponModes[ix].Shell.Awake(m_WeaponModes[ix].gameObject);
+            m_WeaponModes[ix].Reload();
+            m_StateMachines[ix].AddAssociation(this);
+            m_StateMachines[ix].AddAssociation(m_WeaponModes[ix]);
+        }
 	}
 
     protected void OnDestroy()
     {
-        m_Shell.Dispose();
+        for (int ix = 0; ix < m_WeaponModes.Count; ++ix)
+        {
+            m_WeaponModes[ix].Shell.Dispose();
+        }
     }
 
-    public void StartUsing()
+    public void StartUsing(int index)
     {
-        m_StateMachine.TriggerEvent("StartUsing");
+        if (index < m_StateMachines.Count)
+        {
+            m_StateMachines[index].TriggerEvent("StartUsing");
+        }
     }
 
-    public void StopUsing()
+    public void StopUsing(int index)
     {
-        m_StateMachine.TriggerEvent("StopUsing");
+        if (index < m_StateMachines.Count)
+        {
+            m_StateMachines[index].TriggerEvent("StopUsing");
+        }
     }
 
     public void Reload()
     {
-        m_StateMachine.TriggerEvent("Reload");
+        foreach (var stateMachine in m_StateMachines)
+        {
+            stateMachine.TriggerEvent("Reload");
+        }
+    }
+
+    public bool IsInUse {
+        get {
+            foreach (var stateMachine in m_StateMachines)
+            {
+                if( stateMachine.CurrentState != stateMachine.InitialState )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     public void Raise()
@@ -94,37 +80,4 @@ public class FPSGunExample : MonoBehaviour {
     {
         //m_StateMachine.TriggerEvent("Lower");
     }
-
-    #region State Interfaces
-    public void		LaunchProjectiles() {
-		if( m_Shell.LaunchProjectiles(m_Spread, transform) )
-        {
-            UseAmmo();
-        }
-	}
-	
-	public void		UseAmmo() {
-		m_Clip.Use();
-	}
-	
-	public void		ReloadClip() {
-		m_Clip.Reload();
-	}
-	
-	public bool		IsOutOfAmmo() {
-        return m_Clip.IsEmpty;
-	}
-
-    public float	ReloadDuration {
-		get {
-			return 1.0f;
-		}
-	}
-	
-	public float	UseDelay {
-		get {
-			return 1.0f / m_RoundsPerSec;
-		}
-	}
-#endregion
 }

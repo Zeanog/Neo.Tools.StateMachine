@@ -13,6 +13,12 @@ public class Inventory {
             }
         }
 
+        public bool IsInUse {
+            get {
+                return Instance.IsInUse;
+            }
+        }
+
         public void SwitchTo( int index, GameObject prefab, GameObject parent )
         {
             if (Instance != null)
@@ -115,19 +121,32 @@ public class Player : MonoBehaviour {
         }
 
         if ( Input.GetMouseButtonDown(0) ) {
-            if (m_Inventory.CurrentInventoryItem.IsValid)
+            if (m_Inventory.CurrentInventoryItem.IsValid && !m_Inventory.CurrentInventoryItem.IsInUse)
             {
-                m_Inventory.CurrentInventoryItem.Instance.StartUsing();
+                m_Inventory.CurrentInventoryItem.Instance.StartUsing(0);
             }
-		} else if( !Input.GetMouseButton(0)) {
-            if (m_Inventory.CurrentInventoryItem.IsValid)
+		} else if(!Input.GetMouseButton(0)) {
+            if (m_Inventory.CurrentInventoryItem.IsValid && m_Inventory.CurrentInventoryItem.IsInUse)
             {
-                m_Inventory.CurrentInventoryItem.Instance.StopUsing();
+                m_Inventory.CurrentInventoryItem.Instance.StopUsing(0);
             }
 		}
+        
+        if ( Input.GetMouseButtonDown(1) ) {
+            if (m_Inventory.CurrentInventoryItem.IsValid && !m_Inventory.CurrentInventoryItem.IsInUse)
+            {
+                m_Inventory.CurrentInventoryItem.Instance.StartUsing(1);
+            }
+        }
+        else if (!Input.GetMouseButton(1)) {
+            if (m_Inventory.CurrentInventoryItem.IsValid && m_Inventory.CurrentInventoryItem.IsInUse)
+            {
+                m_Inventory.CurrentInventoryItem.Instance.StopUsing(1);
+            }
+        }
 
-		if( Input.GetKeyDown(KeyCode.R) ) {
-            if (m_Inventory.CurrentInventoryItem.IsValid)
+        if ( Input.GetKeyDown(KeyCode.R) ) {
+            if (m_Inventory.CurrentInventoryItem.IsValid && !m_Inventory.CurrentInventoryItem.IsInUse)
             {
                 m_Inventory.CurrentInventoryItem.Instance.Reload();
             }

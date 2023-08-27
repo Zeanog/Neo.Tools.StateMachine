@@ -26,7 +26,7 @@ namespace Neo.StateMachine.Wrappers {
             return HasListeningTo(m_OnExit, go);
         }
 
-        protected bool HasListeningTo(EnterExitUnityEvent ev, GameObject go)
+        protected static bool HasListeningTo(EnterExitUnityEvent ev, GameObject go)
         {
             Object obj;
             System.Type objType;
