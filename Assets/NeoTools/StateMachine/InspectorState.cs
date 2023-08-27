@@ -58,9 +58,7 @@ namespace Neo.StateMachine.Wrappers {
             m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
                 //Log.FormatObject("Entering state '{0}'", gameObject.name);
 
-#if UNITY_EDITOR
-                UnityEditor.EditorGUIUtility.PingObject(gameObject.GetInstanceID());
-#endif
+
             });
 
             m_OnExit.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState)

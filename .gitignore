@@ -4,6 +4,8 @@ Temp
 ProjectSettings
 Packages
 obj
+UserSettings
 .vs
+.vsconfig
 *.csproj
 *.sln

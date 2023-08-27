@@ -84,6 +84,9 @@ namespace Neo.StateMachine.Editor {
 
         protected void OnMonitoredStateChange(State<Wrappers.InspectorStateMachine> current, Transition<Wrappers.InspectorStateMachine> transitionUsed, State<Wrappers.InspectorStateMachine> previous)
         {
+            System.Diagnostics.Debug.Assert(m_MonitoredStateMachine.CurrentState.State == current);
+            UnityEditor.EditorGUIUtility.PingObject(m_MonitoredStateMachine.CurrentState.GetInstanceID());
+
             m_PreviousState.Update(m_MonitoredStateMachine, previous);
             m_TransitionUsed.Update(m_MonitoredStateMachine, transitionUsed);
             m_CurrentState.Update(m_MonitoredStateMachine, current);
