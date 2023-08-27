@@ -32,7 +32,7 @@ namespace Neo.StateMachine.Wrappers {
             System.Type objType;
             for (int ix = 0; ix < ev.GetPersistentEventCount(); ++ix)
             {
-                obj = m_OnEnter.GetPersistentTarget(ix);
+                obj = ev.GetPersistentTarget(ix);
                 objType = obj.GetType();
                 if (objType == typeof(GameObject))
                 {
@@ -55,16 +55,16 @@ namespace Neo.StateMachine.Wrappers {
             State.OnEnter += m_OnEnter.Invoke;
             State.OnExit += m_OnExit.Invoke;
 
-            m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
-                //Log.FormatObject("Entering state '{0}'", gameObject.name);
+            //m_OnEnter.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState ) {
+            //    //Log.FormatObject("Entering state '{0}'", gameObject.name);
 
 
-            });
+            //});
 
-            m_OnExit.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState)
-            {
-                //Log.FormatObject("Exiting state '{0}'", gameObject.name);
-            });
+            //m_OnExit.AddListener(delegate (InspectorStateMachine ism, State<InspectorStateMachine> nextState)
+            //{
+            //    //Log.FormatObject("Exiting state '{0}'", gameObject.name);
+            //});
         }
 
         protected override void OnDestroy()
