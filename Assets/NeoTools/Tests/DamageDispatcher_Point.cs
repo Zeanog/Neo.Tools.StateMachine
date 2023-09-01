@@ -1,11 +1,11 @@
 using UnityEngine;
 
 public class DamageDispatcher_Point : ADamageDispatcher {
-    public override void Dispatch( AProjectile owner ) {
+    public override void Dispatch(GameObject owner ) {
 		CreateFx( owner.transform.position, owner.transform.rotation );
 	}
 	
-	public override void Dispatch( AProjectile owner, Collision collision ) {
+	public override void Dispatch( GameObject owner, Collision collision ) {
 		if( collision.contacts.Length <= 0 ) {
 			return;
 		}
@@ -25,7 +25,7 @@ public class DamageDispatcher_Point : ADamageDispatcher {
         }
     }
 
-	public override void Dispatch( AProjectile owner, RaycastHit[] hits ) {
+	public override void Dispatch(GameObject owner, RaycastHit[] hits ) {
 		if( hits.Length <= 0 ) {
 			return;
 		}

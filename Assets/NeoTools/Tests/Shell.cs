@@ -2,39 +2,54 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class Shell : IDisposable {
+public class Shell {
 	[SerializeField]
-	protected int			m_NumProjectiles;
+	public int			NumProjectiles;
 
-	[SerializeField]
-	protected GameObject	m_ProjectilePrefab;
+    [SerializeField]
+    protected UnityEngine.GameObject m_LauncherObjectRef;//Store actual trace game object or projectile game object so serializer works
 
-	private GameObject		m_Projectile = null;
-    protected AProjectile m_ProjInterface;
-
-    public void	Awake(GameObject owner) {
-		m_Projectile = GameObject.Instantiate( m_ProjectilePrefab, Vector3.zero, Quaternion.identity, owner.transform ) as GameObject;
-        m_Projectile.SetActive(false);
-        m_ProjInterface = m_Projectile.GetComponent<AProjectile>();
-        m_ProjInterface.EnsureCache();
+    [HideInInspector]
+    public IProjectileLauncher Launcher {
+        get; set;
     }
 
-    public void Dispose()
+    public bool   CreateLauncher( Transform parent )
     {
-        if(m_Projectile != null)
+        if(m_LauncherObjectRef == null)
         {
-            GameObject.Destroy(m_Projectile);
-            m_Projectile = null;
+            Launcher = null;
+            return false;
         }
+
+        TraceLauncher launcher = m_LauncherObjectRef.GetComponent<TraceLauncher>();
+        if (launcher != null)
+        {
+            GameObject traceInst = GameObject.Instantiate(m_LauncherObjectRef, Vector3.zero, Quaternion.identity, parent);
+            traceInst.transform.localPosition = Vector3.zero;
+            traceInst.transform.localRotation = Quaternion.identity;
+            traceInst.transform.localScale = Vector3.one;
+            traceInst.SetActive(false);
+            Launcher = traceInst.GetComponent<TraceLauncher>();
+            return true;
+        }
+
+        var projPrefab = m_LauncherObjectRef.GetComponent<Projectile>();
+        if (projPrefab != null)
+        {
+            var projLauncher = ScriptableObject.CreateInstance(typeof(ProjectileLauncher)) as ProjectileLauncher;
+            projLauncher.ProjectilePrefab = m_LauncherObjectRef;
+            Launcher = projLauncher;
+            return true;
+        }
+
+        Launcher = null;
+        return false;
     }
 
 	public virtual bool	LaunchProjectiles( float spread, Transform startTransform ) {
-		if (m_ProjInterface == null) {
-			return false;
-		}
- 
-		for (int ix = 0; ix < m_NumProjectiles; ++ix) {
-			if( !m_ProjInterface.Launch(spread, startTransform) ) {
+		for (int ix = 0; ix < NumProjectiles; ++ix) {
+			if( !Launcher.Launch(spread, startTransform) ) {
 				return false;
 			}
 		}

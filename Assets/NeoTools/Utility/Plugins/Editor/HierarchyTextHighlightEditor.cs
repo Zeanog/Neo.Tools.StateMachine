@@ -1,6 +1,5 @@
 //using UnityEngine;
 using UnityEditor;
-using Neo.Utility.Unity;
 
 namespace Neo.Utility.Unity {
     [CustomEditor(typeof(HierarchyTextHighlight))]

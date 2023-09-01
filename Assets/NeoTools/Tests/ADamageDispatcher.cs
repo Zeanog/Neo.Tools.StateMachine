@@ -10,9 +10,9 @@ public abstract class ADamageDispatcher : MonoBehaviour {
     [SerializeField]
     protected float         m_Force = 10.0f;
 
-    public abstract void Dispatch(AProjectile owner);
-    public abstract void Dispatch(AProjectile owner, RaycastHit[] hits);
-    public virtual void Dispatch(AProjectile owner, Collision collision) { }
+    public abstract void Dispatch(GameObject owner);
+    public abstract void Dispatch(GameObject owner, RaycastHit[] hits);
+    public virtual void Dispatch(GameObject owner, Collision collision) { }
 
     protected virtual void	CreateFx( Vector3 position, Quaternion rotation ) {
 		if( m_FxPrefab == null ) {

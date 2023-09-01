@@ -51,6 +51,11 @@ public class WeaponDef : MonoBehaviour {
     [SerializeField]
     public float Spread = 10.0f; // In Degrees
 
+    protected void Awake()
+    {
+        Shell.CreateLauncher(transform);
+    }
+
     public void LaunchProjectiles(Transform transform)
     {
         if (Shell.LaunchProjectiles(Spread, transform))

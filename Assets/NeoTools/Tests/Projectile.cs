@@ -1,13 +1,8 @@
 using UnityEngine;
-using System.Reflection;
 using Neo.Utility;
 
 public abstract class AProjectile : MonoBehaviour {
-	public virtual void		EnsureCache() {}
-	public abstract bool	Launch( float spread, Transform startTransform );
-}
-
-public abstract class AProjectile_Static : AProjectile {
+	
 }
 
 public abstract class AProjectile_Dynamic : AProjectile {
@@ -50,16 +45,6 @@ public class Projectile : AProjectile_Dynamic {
 	protected float			m_Speed;
 
 	protected InvocationManager	m_InvocationManager = null;
-
-	public override bool	Launch( float spread, Transform startTransform ) {
-		Vector3 startDir = RandomEx.RandomVectorWithinCone( startTransform.forward, spread );
-		GameObject proj = UnityEngine.Object.Instantiate( gameObject, startTransform.position, Quaternion.LookRotation(startDir) ) as GameObject;
-        proj.SetActive(true);
-        var projComp = proj.GetComponent<Projectile>();
-        projComp.ApplyForces();
-
-        return proj != null;
-	}
 
     public void ApplyForces()
     {
@@ -109,10 +94,9 @@ public class Projectile : AProjectile_Dynamic {
 
 		ADamageDispatcher[] dispatchers = this.GetComponents<ADamageDispatcher>();
 		foreach( ADamageDispatcher dispatcher in dispatchers ) {
-            dispatcher.Dispatch(this, collision);
+            dispatcher.Dispatch(gameObject, collision);
 		}
 
 		Destroy( gameObject );
 	}
-
 }

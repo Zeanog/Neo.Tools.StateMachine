@@ -18,20 +18,10 @@ public class FPSGunExample : MonoBehaviour {
     void	Awake() {
         for(int ix = 0; ix < m_StateMachines.Count; ++ix )
         {
-            m_WeaponModes[ix].Shell.Awake(m_WeaponModes[ix].gameObject);
-            m_WeaponModes[ix].Reload();
             m_StateMachines[ix].AddAssociation(this);
             m_StateMachines[ix].AddAssociation(m_WeaponModes[ix]);
         }
 	}
-
-    protected void OnDestroy()
-    {
-        for (int ix = 0; ix < m_WeaponModes.Count; ++ix)
-        {
-            m_WeaponModes[ix].Shell.Dispose();
-        }
-    }
 
     public void StartUsing(int index)
     {
