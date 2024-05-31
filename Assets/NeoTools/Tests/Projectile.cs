@@ -2,7 +2,7 @@ using UnityEngine;
 using Neo.Utility;
 
 public abstract class AProjectile : MonoBehaviour {
-	
+    public abstract void ApplyForces();
 }
 
 public abstract class AProjectile_Dynamic : AProjectile {
@@ -46,7 +46,7 @@ public class Projectile : AProjectile_Dynamic {
 
 	protected InvocationManager	m_InvocationManager = null;
 
-    public void ApplyForces()
+    public override void ApplyForces()
     {
         m_InvocationManager = new InvocationManager(this);
 

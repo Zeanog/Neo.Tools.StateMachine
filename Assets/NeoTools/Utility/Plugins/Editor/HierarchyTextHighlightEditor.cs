@@ -29,7 +29,12 @@ namespace Neo.Utility.Unity {
             }
 
             HierarchyTextHighlight text = target as HierarchyTextHighlight;
-            text.Behaviour = (HierarchyTextHighlight.DecorateBehaviour)EditorGUILayout.EnumPopup( "Color Control Behaviour", text.Behaviour );
+            var behaviour = (HierarchyTextHighlight.DecorateBehaviour)EditorGUILayout.EnumPopup( "Color Control Behaviour", text.Behaviour );
+            if(behaviour != text.Behaviour)
+            {
+                text.Behaviour = behaviour;
+                EditorUtility.SetDirty(target);
+            }
     
             serializedObject.ApplyModifiedProperties();
     	}

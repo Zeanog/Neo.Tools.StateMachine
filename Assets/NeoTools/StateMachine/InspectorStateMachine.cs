@@ -25,7 +25,7 @@ namespace Neo.StateMachine.Wrappers {
         }
 
         //[FullSerializer.fsProperty]
-        public InspectorState CurrentState {
+        public InspectorState CurrentState {//TODO: Find a way to determine this once when we change states
             get {
                 return m_Controller == null ? null : FindInspectorAlias(transform, m_Controller.CurrentState);
             }
@@ -39,6 +39,10 @@ namespace Neo.StateMachine.Wrappers {
             get {
                 return m_Controller == null ? null : FindInspectorAlias(transform, m_Controller.PreviousState);
             }
+        }
+
+        public int  NumEventDelegates {
+            get => m_Controller.NumEventDelegates;
         }
 
         public Action<State<InspectorStateMachine>, Transition<InspectorStateMachine>, State<InspectorStateMachine>> OnStateChange;
@@ -55,11 +59,12 @@ namespace Neo.StateMachine.Wrappers {
 
         public InspectorStateMachine()
         {
-            m_Controller = new StateMachine<InspectorStateMachine>(this);
+            
         }
 
         protected void Awake()
         {
+            m_Controller = new StateMachine<InspectorStateMachine>(this);
             m_Controller.OnStateChange += delegate (State<InspectorStateMachine> current, Transition<InspectorStateMachine> transitionUsed, State<InspectorStateMachine> previous)
             {
                 OnStateChange?.Invoke(current, transitionUsed, previous);
@@ -69,11 +74,14 @@ namespace Neo.StateMachine.Wrappers {
         protected System.Collections.IEnumerator  Start() {
             ExceptionUtility.Verify<System.NullReferenceException>( m_InitialState != null, "Undefined 'm_InitialState'!  Please assign in Inspector." );
 
-            using(var slip = DataStructureLibrary<WaitForEndOfFrame>.Instance.CheckOut()) {
+            using (var slip = DataStructureLibrary<WaitForEndOfFrame>.Instance.CheckOut())
+            {
                 yield return slip.Value;
             }
 
             m_Controller.ChangeState( m_InitialState.State, null, this );
+
+            yield return 0;
             StartCoroutine( "ProcessStateMachine" );
         }
 
@@ -96,8 +104,18 @@ namespace Neo.StateMachine.Wrappers {
             m_Controller.RegisterEvent(key, d);
         }
 
+        public void QueueEvent(string name)
+        {
+            m_Controller.QueueEvent(name);
+        }
+
         public void     TriggerEvent( string name ) {
             m_Controller.TriggerEvent(name);
+        }
+
+        public void TriggerEvent(string name, bool requireListener)
+        {
+            m_Controller.TriggerEvent(name, requireListener);
         }
 
         public void AddAssociation( System.Object obj ) {

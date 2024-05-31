@@ -34,7 +34,7 @@ public class Shell {
             return true;
         }
 
-        var projPrefab = m_LauncherObjectRef.GetComponent<Projectile>();
+        var projPrefab = m_LauncherObjectRef.GetComponent<AProjectile>();
         if (projPrefab != null)
         {
             var projLauncher = ScriptableObject.CreateInstance(typeof(ProjectileLauncher)) as ProjectileLauncher;

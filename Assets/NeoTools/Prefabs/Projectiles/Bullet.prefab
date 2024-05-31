@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -144,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FxPrefab: {fileID: 100000, guid: bd7807020a5f76a49b0afa24c0950c78, type: 3}
   m_Damage: 1
+  m_Force: 10

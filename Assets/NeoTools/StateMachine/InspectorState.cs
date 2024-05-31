@@ -7,6 +7,9 @@ namespace Neo.StateMachine.Wrappers {
     [DisallowMultipleComponent]
     public class InspectorState : AInspectorState<InspectorStateMachine>
     {
+        //Pick a better name maybe
+        public bool Busy;//Use in code to determine if we are "in use" with out having to have many calls from event handlers when we enter and exit a state
+
         [System.Serializable]
         public new class EnterExitUnityEvent : UnityEvent<InspectorStateMachine, State<InspectorStateMachine>> { }
 

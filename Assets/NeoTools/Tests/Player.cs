@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Inventory {
     public class InventoryItem {
         public int Index;
-        public FPSGunExample Instance;
+        public ProjectileWeapon Instance;
 
         public bool IsValid {
             get {
@@ -15,7 +15,7 @@ public class Inventory {
 
         public bool IsInUse {
             get {
-                return Instance.IsInUse;
+                return Instance?.IsInUse ?? false;
             }
         }
 
@@ -28,10 +28,10 @@ public class Inventory {
 
             Index = index;
             GameObject go = GameObject.Instantiate(prefab, parent.transform);
-            go.transform.localPosition = Vector3.zero;
-            go.transform.localRotation = Quaternion.identity;
+            //go.transform.localPosition = Vector3.zero;
+            //go.transform.localRotation = Quaternion.identity;
             
-            Instance = go.GetComponent<FPSGunExample>();
+            Instance = go.GetComponent<ProjectileWeapon>();
             go.SetActive(true);
         }
     }
@@ -39,7 +39,7 @@ public class Inventory {
     [SerializeField]
     protected List<GameObject> m_FirearmPrefabs;
 
-    [SerializeField]
+    //[SerializeField]
     protected int m_InitialWeaponIndex;
 
     public InventoryItem CurrentInventoryItem {
@@ -56,20 +56,35 @@ public class Inventory {
     {
         if (CurrentInventoryItem.IsValid)
         {
+            CurrentInventoryItem.Instance.OnLowered = () => {
+                int nextIndex = (CurrentInventoryItem.Index + direction) % m_FirearmPrefabs.Count;
+                if (nextIndex < 0)
+                {
+                    nextIndex = m_FirearmPrefabs.Count - 1;
+                }
+
+                CurrentInventoryItem.SwitchTo(nextIndex, m_FirearmPrefabs[nextIndex], owner);
+
+                if (CurrentInventoryItem.IsValid)
+                {
+                    CurrentInventoryItem.Instance.Raise();
+                }
+            };
             CurrentInventoryItem.Instance.Lower();
-        }
-
-        int nextIndex = (CurrentInventoryItem.Index + direction) % m_FirearmPrefabs.Count;
-        if(nextIndex < 0)
+        } else
         {
-            nextIndex = m_FirearmPrefabs.Count - 1;
-        }
+            int nextIndex = (CurrentInventoryItem.Index + direction) % m_FirearmPrefabs.Count;
+            if (nextIndex < 0)
+            {
+                nextIndex = m_FirearmPrefabs.Count - 1;
+            }
 
-        CurrentInventoryItem.SwitchTo(nextIndex, m_FirearmPrefabs[nextIndex], owner);
+            CurrentInventoryItem.SwitchTo(nextIndex, m_FirearmPrefabs[nextIndex], owner);
 
-        if (CurrentInventoryItem.IsValid)
-        {
-            CurrentInventoryItem.Instance.Raise();
+            if (CurrentInventoryItem.IsValid)
+            {
+                CurrentInventoryItem.Instance.Raise();
+            }
         }
     }
 }

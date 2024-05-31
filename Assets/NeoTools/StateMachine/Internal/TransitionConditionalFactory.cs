@@ -88,13 +88,17 @@ namespace Neo.StateMachine.Internal
             StaticString declType_OnDelay = new StaticString("TransitionConditional_OnDelay");
             StaticString declType_OnEvent = new StaticString("TransitionConditional_OnEvent");
             StaticString declType_OnState = new StaticString("TransitionConditional_OnState");
+            StaticString declType_OnExpression = new StaticString("TransitionConditional_OnExpression");
+
 
             m_Type2DeclTypeMap.Add(declType_OnDelay, declType_OnDelay);
             m_Type2DeclTypeMap.Add(declType_OnEvent, declType_OnEvent);
             m_Type2DeclTypeMap.Add(declType_OnState, declType_OnState);
+            m_Type2DeclTypeMap.Add(declType_OnExpression, declType_OnExpression);
             m_Type2DeclTypeMap.Add(new StaticString("OnDelay"), declType_OnDelay);
             m_Type2DeclTypeMap.Add(new StaticString("OnEvent"), declType_OnEvent);
             m_Type2DeclTypeMap.Add(new StaticString("OnState"), declType_OnState);
+            m_Type2DeclTypeMap.Add(new StaticString("OnExpr"), declType_OnExpression);
 
             Action<Transition<TOwner>, StaticString, StaticString, List<StaticString>> handler = delegate(Transition<TOwner> transition, StaticString behaviorDeclType, StaticString name, List<StaticString> args)
             {
@@ -182,6 +186,34 @@ namespace Neo.StateMachine.Internal
                 }
             };
             m_ConditionalAllocators.Add(declType_OnState, handler);
+
+            handler = delegate (Transition<TOwner> transition, StaticString behaviorDeclType, StaticString name, List<StaticString> args)
+            {
+                var argInstsSlip = DataStructureLibrary<List<System.Object>>.Instance.CheckOut();
+                argInstsSlip.Value.Clear();
+
+                argInstsSlip.Value.Add(name);
+
+                //TransitionOnStateDelegate del = transition.Owner.FindAssociatedOnStateMethod(args[0].ToString());
+                //ExceptionUtility.Verify<ArgumentException>(del != null, string.Format("Unable to find method {0} for OnState {1}( {0} );", args[0].ToString(), name.ToString()));
+
+                //argInstsSlip.Value.Add(del);
+
+                try
+                {
+                    string behaviorQualifiedName = TransitionConditionalLibrary.Instance.FindAssemblyQualifiedName(behaviorDeclType.ToString(), 1);
+                    transition.AddConditional(AllocateNonGenericConditional(behaviorQualifiedName, argInstsSlip.Value));
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception(ex);
+                }
+                finally
+                {
+                    argInstsSlip.Dispose();
+                }
+            };
+            m_ConditionalAllocators.Add(declType_OnExpression, handler);
         }
 
         #region Find Conditional Args 
@@ -275,7 +307,15 @@ namespace Neo.StateMachine.Internal
                 Log.Error("User Caught Exception(t.InvokeMember): " + e.Message);
             }
 
-            delegateInst = argArray[0] as TransitionEventDelegate;
+            object delObj = argArray[0];
+            if (delObj != null)
+            {
+                delegateInst = argArray[0] as TransitionEventDelegate;
+            }
+            else
+            {
+                
+            }
             return behavior;
         }
 

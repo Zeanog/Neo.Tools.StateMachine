@@ -14,7 +14,7 @@ public class ProjectileLauncher : UnityEngine.ScriptableObject, IProjectileLaunc
         Vector3 startDir = RandomEx.RandomVectorWithinCone(startTransform.forward, spread);
         GameObject proj = GameObject.Instantiate(ProjectilePrefab, startTransform.position, Quaternion.LookRotation(startDir)) as GameObject;
         proj.SetActive(true);
-        var projComp = proj.GetComponent<Projectile>();
+        var projComp = proj.GetComponent<AProjectile>();
         projComp.ApplyForces();
 
         return proj != null;

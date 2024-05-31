@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Neo.Utility {
     public abstract class AHierarchyDecorator : MonoBehaviour {
+        [System.Serializable]
         public enum DecorateBehaviour {
             OnlySelf,
             SelfAndChildren

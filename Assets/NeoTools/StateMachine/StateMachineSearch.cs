@@ -67,7 +67,7 @@ namespace Neo.StateMachine.Editor {
                 }
                 m_SelectedSearchIndex = 0;
 
-                var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
+                var stateMachines = GameObject.FindObjectsByType<InspectorStateMachine>(FindObjectsSortMode.None);
                 foreach (var stateMachine in stateMachines)
                 {
                     SearchCode(stateMachine.InitialState, m_SearchString);
@@ -136,7 +136,7 @@ namespace Neo.StateMachine.Editor {
 
             try
             {
-                var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
+                var stateMachines = GameObject.FindObjectsByType<InspectorStateMachine>(FindObjectsSortMode.None);
                 
                 foreach( var stateMachine in stateMachines )
                 {
@@ -157,7 +157,7 @@ namespace Neo.StateMachine.Editor {
 
             try
             {
-                var stateMachines = GameObject.FindObjectsOfType<InspectorStateMachine>();
+                var stateMachines = GameObject.FindObjectsByType<InspectorStateMachine>(FindObjectsSortMode.None);
                 m_ComponentSearchHandlers[comp.GetType()].Invoke(stateMachines, comp);
                 Selection.objects = m_SelectionGOs.ToArray();
             }

@@ -37,6 +37,10 @@ namespace Neo.StateMachine.Editor {
             if (monitor != null)
             {
                 MonitoredStateMachine = monitor;
+                if (MonitoredStateMachine.CurrentState != null)
+                {
+                    m_CurrentState.Update(m_MonitoredStateMachine, MonitoredStateMachine.CurrentState.State);
+                }
             }
 
             Repaint();

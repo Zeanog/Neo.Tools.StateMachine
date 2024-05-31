@@ -20,6 +20,11 @@ public class Magazine {
         m_Count = m_Capacity;
     }
 
+    public void ReloadRound()
+    {
+        m_Count = Math.Min(m_Count + 1, m_Capacity);
+    }
+
     public void Use()
     {
         m_Count = Mathf.Clamp(Count - 1, 0, m_Capacity);
@@ -38,7 +43,8 @@ public class Magazine {
     }
 }
 
-public class WeaponDef : MonoBehaviour {
+public class WeaponDef : MonoBehaviour
+{
     [SerializeField]
     public Shell Shell;
 
@@ -74,9 +80,19 @@ public class WeaponDef : MonoBehaviour {
         Magazine.Reload();
     }
 
+    public void ReloadRound()
+    {
+        Magazine.ReloadRound();
+    }
+
     public bool IsOutOfAmmo()
     {
         return Magazine.IsEmpty;
+    }
+
+    public bool IsFullOfAmmo()
+    {
+        return Magazine.IsFull;
     }
 
     public float ReloadDuration {
@@ -90,4 +106,8 @@ public class WeaponDef : MonoBehaviour {
             return 1.0f / RoundsPerSec;
         }
     }
+
+    //public bool IsIsUse() {
+        
+    //}
 }

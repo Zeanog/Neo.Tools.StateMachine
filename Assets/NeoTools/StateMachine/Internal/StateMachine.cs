@@ -26,6 +26,8 @@ namespace Neo.StateMachine {
 
         public Action<State<OwnerType>, Transition<OwnerType>, State<OwnerType>>   OnStateChange;
 
+        protected Queue<string> m_QueuedEvents = new Queue<string>();
+
         public StateMachine( OwnerType owner ) {
             m_Owner = owner;
             CurrentState = null;
@@ -50,6 +52,11 @@ namespace Neo.StateMachine {
                 return;
             }
 
+            while(m_QueuedEvents.Count > 0)
+            {
+                TriggerEvent(m_QueuedEvents.Dequeue(), false);
+            }
+
             Transition<OwnerType> transitionUsed;
             State<OwnerType> nextState = CurrentState.AttemptStateChange( m_Owner, out transitionUsed );
             if( nextState != null ) {
@@ -58,6 +65,9 @@ namespace Neo.StateMachine {
         }
 
         protected Dictionary<string, TransitionEventDelegate>     m_DelegateMap = new Dictionary<string, TransitionEventDelegate>();
+        public int  NumEventDelegates {
+            get => m_DelegateMap.Count;
+        }
         public void RegisterEvent(StaticString key, TransitionEventDelegate d)
         {
             if(!m_DelegateMap.ContainsKey(key.ToString()))
@@ -70,18 +80,37 @@ namespace Neo.StateMachine {
             }
         }
 
+        public void QueueEvent(string name)
+        {
+            if (!m_DelegateMap.ContainsKey(name))
+            {
+                m_QueuedEvents.Enqueue(name);
+            }
+            else
+            {
+                TriggerEvent(name);
+            }
+        }
+
         public void TriggerEvent(string name)
         {
-            try
+            TriggerEvent(name, true);
+        }
+
+        public void TriggerEvent(string name, bool requireListener)
+        {
+            if(!m_DelegateMap.ContainsKey(name))
             {
-                TransitionEventDelegate del = m_DelegateMap[ name ];
-                del.Invoke();
-                Evaluate();
+                if (requireListener)
+                {
+                    Log.Error(string.Format("Unable to find delegate event '{0}'", name));
+                }
+                return;
             }
-            catch (KeyNotFoundException)
-            {
-                Log.Error(string.Format("Unable to find delegate event '{0}'", name));
-            }
+
+            TransitionEventDelegate del = m_DelegateMap[name];
+            del.Invoke();
+            Evaluate();
         }
 
         protected List<object>     m_AssociatedObjects = new List<object>();

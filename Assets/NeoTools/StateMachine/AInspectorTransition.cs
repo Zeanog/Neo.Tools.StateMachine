@@ -18,6 +18,7 @@ namespace Neo.StateMachine.Wrappers {
         }
 
         //[FullSerializer.fsIgnore]
+        [SerializeField]
         protected TOwner            m_Owner;
 
         //[FullSerializer.fsIgnore]
@@ -53,7 +54,7 @@ namespace Neo.StateMachine.Wrappers {
             EnsureTransitionInstance();
         }
     
-        protected virtual void  Start() {
+        protected virtual void Start() {
             if (!m_Transition.InitFromProgram(m_Code))
             {
                 //m_Transition.InitFromProgram(m_Code);// Calling this again so we can step through if theres an error
@@ -63,6 +64,9 @@ namespace Neo.StateMachine.Wrappers {
     
         public virtual void AddState( AInspectorState<TOwner> state )
         {
+            System.Diagnostics.Debug.Assert(m_Transition != null);
+            System.Diagnostics.Debug.Assert(state != null);
+            System.Diagnostics.Debug.Assert(state.State != null);
             m_Transition.AddState(state.State);
         }
     }

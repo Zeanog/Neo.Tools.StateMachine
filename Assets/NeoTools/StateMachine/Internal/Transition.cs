@@ -4,32 +4,7 @@ using Neo.Utility;
 using Neo.Utility.Extensions;
 using Neo.StateMachine.Internal;
 
-namespace Neo.StateMachine {
-    public class TransitionPlug<T> {
-	    public Action<T>	OnSet;
-	    public Func<T>	    OnGet;
-
-        public T    Value {
-	        get {
-		        if( OnGet == null ) {
-			        return default(T);
-		        }
-		
-		        return OnGet();
-            }
-
-            set {
-                if( OnSet == null ) {
-			        return;
-		        }
-		
-		        OnSet( value );
-            }
-	    }
-    }
-
-    //----------------------------------------------------------------
-
+namespace Neo.StateMachine {    
     public class Transition<TOwner> where TOwner : class, IStateMachineOwner {
         //[Save]
         protected 	List< State<TOwner> > m_NextStates = new List< State<TOwner> >();
@@ -49,7 +24,6 @@ namespace Neo.StateMachine {
         }
 
 #pragma warning disable 0414
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("", "CS0414")]
         private readonly string  Id = "";
 #pragma warning restore 0414
 

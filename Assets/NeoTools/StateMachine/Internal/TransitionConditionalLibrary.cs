@@ -14,6 +14,7 @@ namespace Neo.StateMachine.Internal {
             //Register( typeof(TransitionConditional_OnEvent<,,,>) );
             Register(typeof(TransitionConditional_OnDelay<>));
             Register(typeof(TransitionConditional_OnState<>));
+            Register(typeof(TransitionConditional_OnExpression<>));
         }
 
         protected void Register( string name, string assemblyQualifiedName ) {
