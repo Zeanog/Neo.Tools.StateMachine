@@ -89,6 +89,7 @@ public class Inventory {
     }
 }
 
+[RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour {
     //[SerializeField]
     //protected	FPSGunExample	m_Gun;
@@ -101,9 +102,14 @@ public class Player : MonoBehaviour {
 
 	[SerializeField]
 	protected float				m_RotationalSpeed;
+
+    protected CharacterController m_CharacterController;
+    protected GameObject         m_Camera;
 	
 	void	Awake() {
-	}
+        m_CharacterController = GetComponent<CharacterController>();
+        m_Camera = GetComponentInChildren<Camera>().gameObject;
+    }
 	
 	void	Start() {
         
@@ -123,7 +129,8 @@ public class Player : MonoBehaviour {
 		}
 
 		translation *= m_Speed * Time.deltaTime;
-        transform.Translate(translation[0], translation[1], translation[2]);
+        //transform.Translate(translation[0], translation[1], translation[2]);
+        m_CharacterController.Move(transform.rotation * translation);
 
         if (Input.GetMouseButton(1))
         {
@@ -131,7 +138,7 @@ public class Player : MonoBehaviour {
             rotation.y = Input.GetAxis("Mouse X");
             rotation *= m_RotationalSpeed * Time.deltaTime;
 
-            transform.Rotate(rotation[0], 0.0f, 0.0f);
+            m_Camera.transform.Rotate(rotation[0], 0.0f, 0.0f);
             transform.Rotate(0.0f, rotation[1], 0.0f);
         }
 
@@ -170,10 +177,10 @@ public class Player : MonoBehaviour {
         float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
         if(mouseWheel > 0.0f)
         {
-            m_Inventory.CycleWeapon(1, gameObject);
+            m_Inventory.CycleWeapon(1, m_Camera);
         } else if(mouseWheel < 0.0f)
         {
-            m_Inventory.CycleWeapon(-1, gameObject);
+            m_Inventory.CycleWeapon(-1, m_Camera);
         }
     }
 }
