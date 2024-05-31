@@ -32,17 +32,17 @@ public class AnimationClipEvents : MonoBehaviour
             var evt = ct.Events[ix];
             AnimationEvent av = new AnimationEvent();
             av.time = evt.normalizedTime * ct.Clip.length;
-            av.stringParameter = string.Format("{0},{1}", clipIndex, ix);//TODO: Pack these into one int.  Maybe upper and lower 16bits
+            int encoded = clipIndex << 16 | ix;
+            av.intParameter = encoded;
             av.functionName = "ExecuteEvent";
             ct.Clip.AddEvent(av);
         }
     }
 
-    protected void ExecuteEvent(string arg)
+    protected void ExecuteEvent(int arg)
     {
-        var args = arg.Split(',', System.StringSplitOptions.RemoveEmptyEntries);
-        var clipIndex = Convert.ToInt32(args[0]);
-        var evtIndex = Convert.ToInt32(args[1]);
+        var clipIndex = arg >> 16;
+        var evtIndex = arg & 0xFF00;
         ClipTransition ct = clips[clipIndex];
         ct.Events[evtIndex].callback?.Invoke();
     }
