@@ -23,15 +23,19 @@ public class AnimationClipEvents : MonoBehaviour
         }
     }
 
+    protected static int EncodingMask = 0xFFFF;
+    protected static int BitShiftAmount = (int)Mathf.Log((float)EncodingMask, 2f) + 1;
+
+
     protected int EncodeParameter(int clipIndex, int evtIndex)
     {
-        return clipIndex << 16 | evtIndex;
+        return clipIndex << BitShiftAmount | evtIndex;
     }
 
     protected void DecodeParameter(int encodedArg, out int clipIndex, out int evtIndex)
     {
-        clipIndex = encodedArg >> 16;
-        evtIndex = encodedArg & 0xFFFF;
+        clipIndex = encodedArg >> BitShiftAmount;
+        evtIndex = encodedArg & EncodingMask;
     }
 
     protected void ApplyClipEvents( int clipIndex )
