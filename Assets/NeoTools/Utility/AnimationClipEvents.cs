@@ -24,6 +24,17 @@ public class AnimationClipEvents : MonoBehaviour
         }
     }
 
+    protected int EncodeParameter(int clipIndex, int evtIndex)
+    {
+        return clipIndex << 16 | evtIndex;
+    }
+
+    protected void DecodeParameter(int encodedArg, out int clipIndex, out int evtIndex)
+    {
+        clipIndex = encodedArg >> 16;
+        evtIndex = encodedArg & 0xFF00;
+    }
+
     protected void ApplyClipEvents( int clipIndex )
     {
         ClipTransition ct = clips[clipIndex];
@@ -32,8 +43,7 @@ public class AnimationClipEvents : MonoBehaviour
             var evt = ct.Events[ix];
             AnimationEvent av = new AnimationEvent();
             av.time = evt.normalizedTime * ct.Clip.length;
-            int encoded = clipIndex << 16 | ix;
-            av.intParameter = encoded;
+            av.intParameter = EncodeParameter( clipIndex, ix );
             av.functionName = "ExecuteEvent";
             ct.Clip.AddEvent(av);
         }
@@ -41,8 +51,7 @@ public class AnimationClipEvents : MonoBehaviour
 
     protected void ExecuteEvent(int arg)
     {
-        var clipIndex = arg >> 16;
-        var evtIndex = arg & 0xFF00;
+        DecodeParameter(arg, out int clipIndex, out int evtIndex);
         ClipTransition ct = clips[clipIndex];
         ct.Events[evtIndex].callback?.Invoke();
     }
@@ -74,8 +83,7 @@ public class AnimationClipEvents : MonoBehaviour
             oct.GetOverrides(overrides);
             foreach (var kv in overrides)
             {
-                var ct = new ClipTransition();
-                ct.Clip = kv.Value;
+                var ct = new ClipTransition() { Clip = kv.Value };
                 clips.Add(ct);
             }
         }
@@ -83,8 +91,7 @@ public class AnimationClipEvents : MonoBehaviour
         {
             foreach (var clip in runtimeControllerAsset.animationClips)
             {
-                var ct = new ClipTransition();
-                ct.Clip = clip;
+                var ct = new ClipTransition() { Clip = clip };
                 clips.Add(ct);
             }
         }
