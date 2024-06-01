@@ -24,8 +24,7 @@ public class AnimationClipEvents : MonoBehaviour
     }
 
     protected static int EncodingMask = 0xFFFF;
-    protected static int BitShiftAmount = (int)Mathf.Log((float)EncodingMask, 2f) + 1;
-
+    protected static int BitShiftAmount = (int)Mathf.Log(EncodingMask, 2f) + 1;
 
     protected int EncodeParameter(int clipIndex, int evtIndex)
     {
