@@ -172,6 +172,12 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3934528426899784311}
+    - target: {fileID: 4906551486680210783, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
+      propertyPath: m_Code
+      value: "{\n   OnEvent onInsertComplete( OnReloadComplete );\n   OnState fullOfAmmo(
+        IsFullOfAmmo );\n}\nonInsertComplete"
+      objectReference: {fileID: 0}
     - target: {fileID: 5893864070214863976, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -182,6 +188,11 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3934528426899784311}
+    - target: {fileID: 8201629400311771435, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
+      propertyPath: m_Code
+      value: true
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
