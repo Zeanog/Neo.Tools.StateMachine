@@ -32,7 +32,7 @@ public class AnimationClipEvents : MonoBehaviour
     protected void DecodeParameter(int encodedArg, out int clipIndex, out int evtIndex)
     {
         clipIndex = encodedArg >> 16;
-        evtIndex = encodedArg & 0xFF00;
+        evtIndex = encodedArg & 0x00FF;
     }
 
     protected void ApplyClipEvents( int clipIndex )
