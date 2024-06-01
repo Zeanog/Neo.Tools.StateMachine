@@ -117,6 +117,11 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8904692536567118637}
+    - target: {fileID: 1753564103113255083, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
+      propertyPath: Shell.m_LauncherObjectRef
+      value: 
+      objectReference: {fileID: 100000, guid: 4c8d1ccd44f9545ab81abcbbff0122f8, type: 3}
     - target: {fileID: 3034327005524050036, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -181,7 +186,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Code
       value: "{\n   OnEvent onReloadComplete( OnReloadComplete );\n   OnState fullOfAmmo(
-        IsFullOfAmmo );\n}\nonInsertComplete"
+        IsFullOfAmmo );\n}\nonReloadComplete"
       objectReference: {fileID: 0}
     - target: {fileID: 5893864070214863976, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}

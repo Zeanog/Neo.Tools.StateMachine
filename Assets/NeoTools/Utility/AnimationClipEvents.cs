@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AnimationClipEvents : MonoBehaviour
 {
     [SerializeField]
@@ -16,8 +17,6 @@ public class AnimationClipEvents : MonoBehaviour
 
     protected void ApplyEvents()
     {
-        var animator = GetComponent<Animator>();
-
         for (int ix = 0; ix < clips.Count; ++ix)
         {
             ApplyClipEvents(ix);
@@ -32,7 +31,7 @@ public class AnimationClipEvents : MonoBehaviour
     protected void DecodeParameter(int encodedArg, out int clipIndex, out int evtIndex)
     {
         clipIndex = encodedArg >> 16;
-        evtIndex = encodedArg & 0x00FF;
+        evtIndex = encodedArg & 0xFFFF;
     }
 
     protected void ApplyClipEvents( int clipIndex )

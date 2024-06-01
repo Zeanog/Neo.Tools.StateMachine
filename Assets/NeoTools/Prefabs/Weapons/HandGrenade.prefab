@@ -117,6 +117,11 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6631500294497466215}
+    - target: {fileID: 3457507078842719913, guid: e9463ab0481e68640ba848e5cf236e07,
+        type: 3}
+      propertyPath: m_Name
+      value: Lowered
+      objectReference: {fileID: 0}
     - target: {fileID: 6818574754188441479, guid: e9463ab0481e68640ba848e5cf236e07,
         type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -382,7 +387,7 @@ MonoBehaviour:
   - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes:
-      - 0.72754854
+      - 0.7612582
       - NaN
       _Callbacks:
       - m_PersistentCalls:
