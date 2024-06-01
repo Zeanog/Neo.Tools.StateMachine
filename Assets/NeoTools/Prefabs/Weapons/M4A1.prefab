@@ -109,6 +109,11 @@ PrefabInstance:
       objectReference: {fileID: 3934528426899784311}
     - target: {fileID: 11906077332119713, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11906077332119713, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8904692536567118637}
@@ -175,7 +180,7 @@ PrefabInstance:
     - target: {fileID: 4906551486680210783, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
       propertyPath: m_Code
-      value: "{\n   OnEvent onInsertComplete( OnReloadComplete );\n   OnState fullOfAmmo(
+      value: "{\n   OnEvent onReloadComplete( OnReloadComplete );\n   OnState fullOfAmmo(
         IsFullOfAmmo );\n}\nonInsertComplete"
       objectReference: {fileID: 0}
     - target: {fileID: 5893864070214863976, guid: 2aa8bad460d5fbd49aad1176457edb98,

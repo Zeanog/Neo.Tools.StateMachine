@@ -7,7 +7,7 @@ using UnityEngine;
 public class AnimationClipEvents : MonoBehaviour
 {
     [SerializeField]
-    protected List<ClipTransition> clips;
+    protected List<ClipTransition> clips = new List<ClipTransition>();
 
     protected void Start()
     {
