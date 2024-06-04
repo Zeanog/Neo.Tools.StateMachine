@@ -36,7 +36,7 @@ public class TraceLauncher : MonoBehaviour, IProjectileLauncher {
         RaycastHit[] hits = Physics.RaycastAll(startTransform.position, startDir, m_Range);
         if (hits == null || hits.Length <= 0)
         {
-            return false;
+            return true;
         }
 
         System.Array.Sort(hits, ZDistanceSort.Instance);

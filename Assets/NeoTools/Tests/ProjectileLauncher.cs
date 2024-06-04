@@ -2,7 +2,7 @@
 using System;
 
 [Serializable]
-public class ProjectileLauncher : UnityEngine.ScriptableObject, IProjectileLauncher {
+public class ProjectileLauncher : ScriptableObject, IProjectileLauncher {
     [SerializeField]
     public GameObject ProjectilePrefab {
         get;

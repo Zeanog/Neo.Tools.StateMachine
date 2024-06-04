@@ -20,11 +20,6 @@ public class AnimationClipEventsEditor : Editor
     {
         serializedObject.Update();
 
-        //if (controller != null)
-        //{
-        //    EditorGUILayout.PropertyField(controller);
-        //}
-
         if (clips != null)
         {
 

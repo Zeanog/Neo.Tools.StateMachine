@@ -23,11 +23,13 @@ public class AnimationClipEvents : MonoBehaviour
         }
     }
 
-    protected static int EncodingMask = 0xFFFF;
+    protected static int EncodingMask = 0x0000FFFF;
     protected static int BitShiftAmount = (int)Mathf.Log(EncodingMask, 2f) + 1;
 
     protected int EncodeParameter(int clipIndex, int evtIndex)
     {
+        Neo.Utility.ExceptionUtility.Verify<ArgumentOutOfRangeException>(clipIndex <= EncodingMask);
+        Neo.Utility.ExceptionUtility.Verify<ArgumentOutOfRangeException>(evtIndex <= EncodingMask);
         return clipIndex << BitShiftAmount | evtIndex;
     }
 

@@ -5,11 +5,9 @@ using Neo.Utility.Extensions;
 namespace Neo.StateMachine.Wrappers {
     public abstract class AInspectorTransition<TOwner> : AInspectorTransitionProxy<TOwner> where TOwner : MonoBehaviour, IStateMachineOwner {
         [SerializeField]
-        //[FullSerializer.fsIgnore]
         protected bool                 m_ReadOnly = false;
 
         [SerializeField]
-        //[FullSerializer.fsIgnore]
         protected string            m_Code = "";
         public string               Code {
             get {
@@ -17,11 +15,9 @@ namespace Neo.StateMachine.Wrappers {
             }
         }
 
-        //[FullSerializer.fsIgnore]
         [SerializeField]
         protected TOwner            m_Owner;
 
-        //[FullSerializer.fsIgnore]
         [HideInInspector]
         protected Transition<TOwner>        m_Transition;
         public override Transition<TOwner>  Transition {

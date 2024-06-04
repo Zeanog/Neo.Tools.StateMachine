@@ -4,7 +4,6 @@ using Neo.Utility;
 
 namespace Neo.StateMachine.Wrappers {
     public abstract class AInspectorState<TOwner> : MonoBehaviour where TOwner : MonoBehaviour, IStateMachineOwner {
-        //[FullSerializer.fsIgnore]
         [System.Serializable]
         protected class EnterExitUnityEvent : UnityEvent<TOwner, State<TOwner>> {}
 
@@ -19,8 +18,6 @@ namespace Neo.StateMachine.Wrappers {
         }
 #endif
 
-        //[FullSerializer.fsIgnore]
-        //protected State<TOwner> m_Impl = 
         public virtual State<TOwner> State {
             get;
         } = new State<TOwner>();

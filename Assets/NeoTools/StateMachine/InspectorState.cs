@@ -13,7 +13,6 @@ namespace Neo.StateMachine.Wrappers {
         [System.Serializable]
         public new class EnterExitUnityEvent : UnityEvent<InspectorStateMachine, State<InspectorStateMachine>> { }
 
-        //[FullSerializer.fsIgnore]
         [SerializeField]
         protected EnterExitUnityEvent   m_OnEnter;
         public bool HasListenerToOnEnter(GameObject go)
@@ -21,7 +20,6 @@ namespace Neo.StateMachine.Wrappers {
             return HasListeningTo(m_OnEnter, go);
         }
 
-        //[FullSerializer.fsIgnore]
         [SerializeField]
         protected EnterExitUnityEvent   m_OnExit;
         public bool HasListenerToOnExit(GameObject go)

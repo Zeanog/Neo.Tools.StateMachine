@@ -16,9 +16,9 @@ public class ProgramCache {
         }
     }
 
-    protected Dictionary< StaticString, List<StaticString> > m_Cache = new Dictionary<StaticString, List<StaticString>>();
+    protected Dictionary< StaticString, List<string> > m_Cache = new Dictionary<StaticString, List<string>>();
 
-    public List<StaticString>   FindInstructions( StaticString program ) {
+    public List<string>   FindInstructions( StaticString program ) {
         try {
             return m_Cache[ program ];
         }
@@ -27,8 +27,13 @@ public class ProgramCache {
         }
     }
 
-    public void         Register( StaticString program, List<StaticString> instructions ) {
-        m_Cache.Add( program, instructions );
+	public bool TryFindInstructions(StaticString program, out List<string> instructions)
+	{
+	    return m_Cache.TryGetValue( program, out instructions );
+	}
+	
+	public void         Register( StaticString program, List<string> instructions ) {
+			m_Cache.Add( program, instructions );
     }
 }
 
@@ -36,9 +41,8 @@ public class TransitionProgram<OwnerType> where OwnerType : class {
 	public TransitionProgram() {
 	}
 	
-	public bool	LoadProgram( string expression ) {
-        //List<StaticString> instructions = ProgramCache.Instance.FindInstructions( new StaticString(expression) );
-        //if( instructions == null ) {
+	public bool	LoadProgram( string expression ) {        
+        //if( !ProgramCache.Instance.TryFindInstructions(new StaticString(expression), out List<string> instructions)) {
 		    ANTLRStringStream input = new ANTLRStringStream( expression );
             StateMachineTransitionLexer lexer = new StateMachineTransitionLexer( input );
             CommonTokenStream tokens = new CommonTokenStream( lexer );
@@ -57,10 +61,12 @@ public class TransitionProgram<OwnerType> where OwnerType : class {
 		    if( !LoadInstructions(tree.Instructions) ) {
 			    return false;
 		    }
+
+			//ProgramCache.Instance.Register(new StaticString(expression), tree.Instructions);
         //} else {
         //    if( !LoadInstructions(instructions) ) {
-		//	    return false;
-		//    }
+			    //return false;
+		    //}
         //}
 		
 		return m_Interpreter.Execute();// Create all declared behaviors

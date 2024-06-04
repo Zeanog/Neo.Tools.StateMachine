@@ -95,19 +95,9 @@ public class WeaponDef : MonoBehaviour
         return Magazine.IsFull;
     }
 
-    public float ReloadDuration {
-        get {
-            return 1.0f;
-        }
-    }
-
     public float UseDelay {
         get {
             return 1.0f / RoundsPerSec;
         }
     }
-
-    //public bool IsIsUse() {
-        
-    //}
 }
