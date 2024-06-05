@@ -7,7 +7,10 @@ public class Shell {
 	public int			NumProjectiles;
 
     [SerializeField]
-    protected UnityEngine.GameObject m_LauncherObjectRef;//Store actual trace game object or projectile game object so serializer works
+    protected GameObject m_LauncherObjectRef;//Store actual trace game object or projectile game object so serializer works
+
+    [SerializeField]
+    public GameObject CasingObjectRef;
 
     [HideInInspector]
     public IProjectileLauncher Launcher {
@@ -56,4 +59,15 @@ public class Shell {
 
 		return true;
 	}
+
+    public virtual void LaunchCasing(Transform launchPt, Vector3 launchDir)
+    {
+        if (CasingObjectRef == null) {
+            return;
+        }
+
+        var casingGO = GameObject.Instantiate(CasingObjectRef, launchPt.position, launchPt.rotation);
+        var rb = casingGO.GetComponent<Rigidbody>();
+        rb.AddRelativeForce(launchDir);
+    }
 }

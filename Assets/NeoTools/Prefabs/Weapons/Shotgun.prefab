@@ -478,10 +478,20 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4080053265494966443}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a37f3b22cf93b4a86e88f413bec273,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4495738327854043126}
   m_SourcePrefab: {fileID: 100100000, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
 --- !u!4 &1392461870707230366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2723320468856054800, guid: b8a37f3b22cf93b4a86e88f413bec273,
+    type: 3}
+  m_PrefabInstance: {fileID: 5289432440820931950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2059122458543895880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6193766911407728678, guid: b8a37f3b22cf93b4a86e88f413bec273,
     type: 3}
   m_PrefabInstance: {fileID: 5289432440820931950}
   m_PrefabAsset: {fileID: 0}
@@ -526,6 +536,97 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Reference: {fileID: 3555048980906702037}
+--- !u!114 &4495738327854043126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018908936607244351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dee68533d10c8a44bf3011c2937c848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 1893393626920919930, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: -7864386331214238077, guid: b8a37f3b22cf93b4a86e88f413bec273,
+      type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: -6326748466804088668, guid: b8a37f3b22cf93b4a86e88f413bec273,
+      type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: -7625096299665883661, guid: b8a37f3b22cf93b4a86e88f413bec273,
+      type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes:
+      - 0.5808659
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8313294923248073852}
+            m_TargetAssemblyTypeName: WeaponDef, Assembly-CSharp
+            m_MethodName: EjectCasing
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 2059122458543895880}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      _Names:
+      - EjectCasing
+    _Clip: {fileID: -3704289112126983070, guid: b8a37f3b22cf93b4a86e88f413bec273,
+      type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 3947973512406741949, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: -3100369314251171874, guid: b8a37f3b22cf93b4a86e88f413bec273,
+      type: 3}
+    _Speed: 1
+    _NormalizedStartTime: NaN
 --- !u!4 &5687324752250829445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b8a37f3b22cf93b4a86e88f413bec273,
@@ -560,6 +661,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1477278762672775079, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: Shell.CasingObjectRef
+      value: 
+      objectReference: {fileID: 1398271860652292818, guid: af16775043315b049b36d81b226a002b,
+        type: 3}
     - target: {fileID: 1868500023229268121, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_Layer
