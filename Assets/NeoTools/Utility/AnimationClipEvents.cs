@@ -41,13 +41,23 @@ public class AnimationClipEvents : MonoBehaviour
 
     protected void ApplyClipEvents( int clipIndex )
     {
+        AnimationEvent av;
         ClipTransition ct = clips[clipIndex];
         for (int ix = 0; ix < ct.Events.Count; ++ix)
         {
             var evt = ct.Events[ix];
-            AnimationEvent av = new AnimationEvent();
+            av = new AnimationEvent();
             av.time = evt.normalizedTime * ct.Clip.length;
             av.intParameter = EncodeParameter( clipIndex, ix );
+            av.functionName = "ExecuteEvent";
+            ct.Clip.AddEvent(av);
+        }
+
+        if (ct.Events.EndEvent != null && ct.Events.EndEvent.callback != null && ct.Events.EndEvent.callback.GetInvocationList().Length > 0) //The last boolean may not be necessary 
+        {
+            av = new AnimationEvent();
+            av.time = ct.Clip.length - ct.Clip.length * 0.01f;
+            av.intParameter = EncodeParameter(clipIndex, ct.Events.Count);
             av.functionName = "ExecuteEvent";
             ct.Clip.AddEvent(av);
         }
@@ -57,7 +67,8 @@ public class AnimationClipEvents : MonoBehaviour
     {
         DecodeParameter(arg, out int clipIndex, out int evtIndex);
         ClipTransition ct = clips[clipIndex];
-        ct.Events[evtIndex].callback?.Invoke();
+        Action act = (evtIndex < ct.Events.Count) ? ct.Events[evtIndex].callback : ct.Events.EndEvent.callback;
+        act?.Invoke();
     }
 
     protected T LoadAsset<T>( RuntimeAnimatorController ct ) where T : RuntimeAnimatorController

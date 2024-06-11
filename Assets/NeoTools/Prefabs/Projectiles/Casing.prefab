@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1714530158931834484}
   - component: {fileID: 426822520935466362}
   - component: {fileID: 4178916005261794760}
+  - component: {fileID: 1254709747173796091}
   m_Layer: 0
   m_Name: Casing
   m_TagString: Untagged
@@ -73,7 +74,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defa15da7cd94b548ae8460a3f0676af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delay: 1
+  m_Delay: 2
+--- !u!64 &1254709747173796091
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398271860652292818}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1352553863953798561, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
 --- !u!1 &7304185674244037337
 GameObject:
   m_ObjectHideFlags: 0

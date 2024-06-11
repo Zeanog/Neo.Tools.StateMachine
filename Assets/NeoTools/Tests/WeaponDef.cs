@@ -72,7 +72,7 @@ public class WeaponDef : MonoBehaviour
 
     public void EjectCasing(Transform transform)
     {
-        Shell.LaunchCasing(transform, new Vector3(200, 100, 0));
+        Shell.LaunchCasing(transform, new Vector3(150, 100, 0));
     }
 
     public void UseAmmo()

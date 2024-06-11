@@ -22,16 +22,6 @@ public class Grenade : AProjectile_Dynamic {
         m_InvocationManager.Invoke("OnDetonate", m_CookoffDelay);
     }
 
-    void Awake()
-    {
-
-    }
-
-    void Start()
-    {
-
-    }
-
     protected void OnDetonate()
     {
         ADamageDispatcher[] dispatchers = this.GetComponents<ADamageDispatcher>();
@@ -47,17 +37,4 @@ public class Grenade : AProjectile_Dynamic {
     {
         m_InvocationManager?.CancelAll();
     }
-
-    //protected void OnCollisionEnter(Collision collision)
-    //{
-    //    gameObject.SetActive(false);
-
-    //    ADamageDispatcher[] dispatchers = this.GetComponents<ADamageDispatcher>();
-    //    foreach (ADamageDispatcher dispatcher in dispatchers)
-    //    {
-    //        dispatcher.Dispatch(gameObject, collision);
-    //    }
-
-    //    Destroy(gameObject);
-    //}
 }

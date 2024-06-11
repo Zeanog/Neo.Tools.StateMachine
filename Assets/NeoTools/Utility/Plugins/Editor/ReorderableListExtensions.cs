@@ -7,7 +7,8 @@ namespace Neo.Utility.Extensions.Unity {
         public delegate void ElementCallbackDelegate( SerializedProperty element, Rect rect, bool isActive, bool isFocused );
     
         public static ReorderableList  Create( SerializedObject owner, string listName, string displayName ) {
-            ReorderableList list = new ReorderableList( owner, owner.FindProperty(listName), true, !string.IsNullOrEmpty(displayName), true, true );
+            var prop = owner.FindProperty(listName);
+            ReorderableList list = new ReorderableList( owner, prop, true, !string.IsNullOrEmpty(displayName), true, true );
     
             list.drawHeaderCallback = delegate( Rect rect ) {
                 EditorGUI.LabelField( new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), displayName );

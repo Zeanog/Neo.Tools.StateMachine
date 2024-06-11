@@ -7,11 +7,16 @@ public interface IAnimatorEventHandler
     void OnAnimEvent(string evtName, Animator aniamtor, int layerIndex);
 }
 
+[UnityEngine.ExecuteAlways]
 public abstract class AAnimatorEventHander : MonoBehaviour, IAnimatorEventHandler
 {
     protected Dictionary<string, Action<Animator, int>> animCallbackHandlers = new Dictionary<string, Action<Animator, int>>();
 
     protected virtual void Awake()
+    {
+    }
+
+    protected virtual void Start()
     {
     }
 

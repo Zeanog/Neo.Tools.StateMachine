@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6142108477238758663}
   - component: {fileID: 6086259254348380270}
-  - component: {fileID: 6408598491754753555}
   m_Layer: 3
   m_Name: Shotgun
   m_TagString: Untagged
@@ -82,18 +81,6 @@ MonoBehaviour:
   - {fileID: 3555048980906702037}
   m_WeaponModes:
   - {fileID: 8313294923248073852}
---- !u!114 &6408598491754753555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7843374430897508787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9be83d25dff8f489259992bb454727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5289432440820931950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -551,16 +538,48 @@ MonoBehaviour:
   clips:
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnRaiseComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: 1893393626920919930, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
     _Speed: 1
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: InsertCompleted
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: -7864386331214238077, guid: b8a37f3b22cf93b4a86e88f413bec273,
       type: 3}
@@ -568,8 +587,24 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - 0.9047109
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnReloadComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: -6326748466804088668, guid: b8a37f3b22cf93b4a86e88f413bec273,
       type: 3}
@@ -577,8 +612,24 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: ReloadStartCompleted
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: -7625096299665883661, guid: b8a37f3b22cf93b4a86e88f413bec273,
       type: 3}
@@ -604,6 +655,21 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnUseComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names:
       - EjectCasing
     _Clip: {fileID: -3704289112126983070, guid: b8a37f3b22cf93b4a86e88f413bec273,
@@ -612,8 +678,24 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3555048980906702037}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnHideComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: 3947973512406741949, guid: b8a37f3b22cf93b4a86e88f413bec273, type: 3}
     _Speed: 1
@@ -687,11 +769,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2313375255047583506, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_Code
+      value: "{\n   \tOnState fullOfAmmo( IsFullOfAmmo );\n}\n!fullOfAmmo\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313375255047583506, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: 'm_NextStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1078746982660995584}
     - target: {fileID: 2532310438808325902, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6086259254348380270}
+    - target: {fileID: 3458438936981101182, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_Code
+      value: "{\n       OnEvent onStartComplete(ReloadStartCompleted);\n}\nonStartComplete"
+      objectReference: {fileID: 0}
     - target: {fileID: 3609826500241402872, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -702,6 +799,11 @@ PrefabInstance:
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 603195685931158014}
+    - target: {fileID: 3662477561524468421, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_Code
+      value: true
+      objectReference: {fileID: 0}
     - target: {fileID: 4169199154379792229, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_Layer
@@ -716,6 +818,81 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8313294923248073852}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2731032775554930741}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadRound
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponDef, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: InsertShell
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313604057720927827, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4345957028304903402, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
@@ -774,14 +951,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7323322814862609770, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7323322814862609770, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2731032775554930741}
+    - target: {fileID: 7323322814862609770, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7513013025818467228, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7576992121670654427, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8313294923248073852}
     - target: {fileID: 7670831959493460259, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_Layer
@@ -859,9 +1051,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
       propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2731032775554930741}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Reload
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737791328379913575, guid: cf9b8123c56d47a48b5088f6212095b3,
+        type: 3}
+      propertyPath: m_OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8952260552653024050, guid: cf9b8123c56d47a48b5088f6212095b3,
         type: 3}
       propertyPath: m_Layer
@@ -892,6 +1119,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf9b8123c56d47a48b5088f6212095b3, type: 3}
+--- !u!114 &1078746982660995584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7576992121670654427, guid: cf9b8123c56d47a48b5088f6212095b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7484587422057276379}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f9d1a46136a594c84614d660211661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1303205853614819381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8488003590298758126, guid: cf9b8123c56d47a48b5088f6212095b3,

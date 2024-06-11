@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3896619176081399864}
   - component: {fileID: 5882139024163708725}
-  - component: {fileID: 1183636422097196830}
   m_Layer: 3
   m_Name: M4A1
   m_TagString: Untagged
@@ -82,18 +81,6 @@ MonoBehaviour:
   - {fileID: 4437468333316091867}
   m_WeaponModes:
   - {fileID: 3885283974939310640}
---- !u!114 &1183636422097196830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4487561924242024478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c34e3efd03b2c841862e6f664080949, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3296252788848677531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -233,6 +220,11 @@ PrefabInstance:
       value: "{\n   OnEvent onReloadComplete( OnReloadComplete );\n   OnState fullOfAmmo(
         IsFullOfAmmo );\n}\nonReloadComplete"
       objectReference: {fileID: 0}
+    - target: {fileID: 4906551486680210783, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
+      propertyPath: 'm_NextStates.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4370976600305096396}
     - target: {fileID: 5517164220855552221, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
       propertyPath: m_Layer
@@ -324,7 +316,8 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 344994040316885739, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aa8bad460d5fbd49aad1176457edb98, type: 3}
@@ -344,6 +337,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4970b9ea1c229a42a00c9082b670b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4370976600305096396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1231295231506089047, guid: 2aa8bad460d5fbd49aad1176457edb98,
+    type: 3}
+  m_PrefabInstance: {fileID: 3296252788848677531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f9d1a46136a594c84614d660211661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4437468333316091867 stripped
@@ -844,8 +849,24 @@ MonoBehaviour:
   clips:
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4437468333316091867}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnRaiseComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: 1893393626920919930, guid: d50183f83886faa44930542e23c15140, type: 3}
     _Speed: 1
@@ -862,9 +883,38 @@ MonoBehaviour:
   - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes:
-      - 0.7175112
+      - 0.5581741
       - NaN
-      _Callbacks: []
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 3885283974939310640}
+            m_TargetAssemblyTypeName: WeaponDef, Assembly-CSharp
+            m_MethodName: Reload
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4437468333316091867}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnReloadComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names:
       - MagazineInserted
     _Clip: {fileID: 229770723416056496, guid: d50183f83886faa44930542e23c15140, type: 3}
@@ -872,8 +922,24 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4437468333316091867}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnUseComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: -3704289112126983070, guid: d50183f83886faa44930542e23c15140,
       type: 3}
@@ -881,8 +947,24 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
+      _NormalizedTimes:
+      - NaN
+      _Callbacks:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4437468333316091867}
+            m_TargetAssemblyTypeName: Neo.StateMachine.Wrappers.InspectorStateMachine,
+              Assembly-CSharp
+            m_MethodName: TriggerEvent
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: OnHideComplete
+              m_BoolArgument: 0
+            m_CallState: 2
       _Names: []
     _Clip: {fileID: 3947973512406741949, guid: d50183f83886faa44930542e23c15140, type: 3}
     _Speed: 1
