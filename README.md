@@ -71,3 +71,6 @@ Also cleaned up debugger layout.
 ------------------------------------------------
 9/11/2021 - Added area effect force in damage dispatchers
 
+------------------------------------------------
+6/12/2024 - Refactored weapon code.  Added animated models.  I have 3 weapons as examples
+
