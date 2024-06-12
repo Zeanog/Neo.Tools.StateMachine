@@ -7,10 +7,10 @@ public class Shell {
 	public int			NumProjectiles;
 
     [SerializeField]
-    protected GameObject m_LauncherObjectRef;//Store actual trace game object or projectile game object so serializer works
+    protected GameObject m_ProjectilePrefab;
 
     [SerializeField]
-    public GameObject CasingObjectRef;
+    protected GameObject m_CasingPrefab;
 
     [HideInInspector]
     public IProjectileLauncher Launcher {
@@ -19,16 +19,16 @@ public class Shell {
 
     public bool   CreateLauncher( Transform parent )
     {
-        if(m_LauncherObjectRef == null)
+        if(m_ProjectilePrefab == null)
         {
             Launcher = null;
             return false;
         }
 
-        TraceLauncher launcher = m_LauncherObjectRef.GetComponent<TraceLauncher>();
+        TraceLauncher launcher = m_ProjectilePrefab.GetComponent<TraceLauncher>();
         if (launcher != null)
         {
-            GameObject traceInst = GameObject.Instantiate(m_LauncherObjectRef, Vector3.zero, Quaternion.identity, parent);
+            GameObject traceInst = GameObject.Instantiate(m_ProjectilePrefab, Vector3.zero, Quaternion.identity, parent);
             traceInst.transform.localPosition = Vector3.zero;
             traceInst.transform.localRotation = Quaternion.identity;
             traceInst.transform.localScale = Vector3.one;
@@ -37,11 +37,11 @@ public class Shell {
             return true;
         }
 
-        var projPrefab = m_LauncherObjectRef.GetComponent<AProjectile>();
+        var projPrefab = m_ProjectilePrefab.GetComponent<AProjectile>();
         if (projPrefab != null)
         {
             var projLauncher = ScriptableObject.CreateInstance(typeof(ProjectileLauncher)) as ProjectileLauncher;
-            projLauncher.ProjectilePrefab = m_LauncherObjectRef;
+            projLauncher.ProjectilePrefab = m_ProjectilePrefab;
             Launcher = projLauncher;
             return true;
         }
@@ -62,11 +62,11 @@ public class Shell {
 
     public virtual void LaunchCasing(Transform launchPt, Vector3 launchDir)
     {
-        if (CasingObjectRef == null) {
+        if (m_CasingPrefab == null) {
             return;
         }
 
-        var casingGO = GameObject.Instantiate(CasingObjectRef, launchPt.position, launchPt.rotation);
+        var casingGO = GameObject.Instantiate(m_CasingPrefab, launchPt.position, launchPt.rotation);
         var rb = casingGO.GetComponent<Rigidbody>();
         rb.AddRelativeForce(launchDir);
     }

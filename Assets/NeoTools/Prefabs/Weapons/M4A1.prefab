@@ -77,8 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e496c8da53dc241bab01f7e105cc4be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UseStateMachines:
-  - {fileID: 4437468333316091867}
   m_WeaponModes:
   - {fileID: 3885283974939310640}
 --- !u!1001 &3296252788848677531
@@ -134,6 +132,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1753564103113255083, guid: 2aa8bad460d5fbd49aad1176457edb98,
+        type: 3}
+      propertyPath: Shell.m_ProjectilePrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 4c8d1ccd44f9545ab81abcbbff0122f8, type: 3}
     - target: {fileID: 1753564103113255083, guid: 2aa8bad460d5fbd49aad1176457edb98,
         type: 3}
       propertyPath: Shell.m_LauncherObjectRef
@@ -781,10 +784,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d50183f83886faa44930542e23c15140,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5125200894766297398}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d50183f83886faa44930542e23c15140,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6085733305117496544}
   m_SourcePrefab: {fileID: 100100000, guid: d50183f83886faa44930542e23c15140, type: 3}
 --- !u!4 &7369005710492065582 stripped
@@ -821,19 +820,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5125200894766297398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7856572474706888084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b5b9a333c788314789bd2ae09a529b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Reference: {fileID: 4437468333316091867}
 --- !u!114 &6085733305117496544
 MonoBehaviour:
   m_ObjectHideFlags: 0

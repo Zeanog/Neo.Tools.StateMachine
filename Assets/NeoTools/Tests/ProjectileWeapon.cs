@@ -5,17 +5,19 @@ using Neo.StateMachine.Wrappers;
 [DisallowMultipleComponent]
 public class ProjectileWeapon : MonoBehaviour {
     [SerializeField]
-    protected List<InspectorStateMachine> m_UseStateMachines = new List<InspectorStateMachine>();
-
-    [SerializeField]
     protected List<WeaponDef> m_WeaponModes;
 
+    protected List<InspectorStateMachine> m_UseStateMachines = new List<InspectorStateMachine>();
+
     protected void	Awake() {
-        for (int ix = 0; ix < m_UseStateMachines.Count; ++ix )
+        m_UseStateMachines.Clear();
+        for (int ix = 0; ix < m_WeaponModes.Count; ++ix )
         {
-            m_UseStateMachines[ix].AddAssociation(m_WeaponModes[ix]);
-            m_UseStateMachines[ix].AddAssociation(this);
-        } 
+            var sm = m_WeaponModes[ix].GetComponentInChildren<InspectorStateMachine>();
+            m_UseStateMachines.Add( sm );
+            sm.AddAssociation(m_WeaponModes[ix]);
+            sm.AddAssociation(this);
+        }
     }
 
     public void TriggerStateEvent(string evtName, int index)

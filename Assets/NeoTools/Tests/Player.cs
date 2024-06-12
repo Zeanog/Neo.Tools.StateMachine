@@ -129,7 +129,6 @@ public class Player : MonoBehaviour {
 		}
 
 		translation *= m_Speed * Time.deltaTime;
-        //transform.Translate(translation[0], translation[1], translation[2]);
         m_CharacterController.Move(transform.rotation * translation);
 
         if (Input.GetMouseButton(1))
